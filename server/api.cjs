@@ -1,9 +1,13 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 const app = express();
-const db = require("./MySQL.cjs"); // Import the database connection module
+const db = require("./MySQL.cjs");
 
 // Middleware to parse JSON request bodies
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(cors());
 
 //------------------------------------USERS-------------------------------------
 app.get("/users", (req, res) => {
@@ -181,6 +185,7 @@ app.delete("/todos/:id", (req, res) => {
 
 //------------------------------POSTS-------------------------------------------
 app.get("/posts", (req, res) => {
+  console.log("we are here");
   db.query("SELECT * FROM posts", (err, results) => {
     if (err) {
       console.error("Error executing the query: ", err);

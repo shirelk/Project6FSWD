@@ -21,20 +21,24 @@ app.get("/users", (req, res) => {
   });
 });
 
-app.get("/users/:id", (req, res) => {
-  const userId = req.params.id;
-  db.query("SELECT * FROM users WHERE id = ?", [userId], (err, results) => {
-    if (err) {
-      console.error("Error executing the query: ", err);
-      res.status(500).json({ error: "Failed to fetch user" });
-      return;
+app.get("/users/:username", (req, res) => {
+  const username = req.params.username;
+  db.query(
+    "SELECT * FROM users WHERE username = ?",
+    [username],
+    (err, results) => {
+      if (err) {
+        console.error("Error executing the query: ", err);
+        res.status(500).json({ error: "Failed to fetch user" });
+        return;
+      }
+      if (results.length === 0) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+      res.json(results[0]);
     }
-    if (results.length === 0) {
-      res.status(404).json({ error: "User not found" });
-      return;
-    }
-    res.json(results[0]);
-  });
+  );
 });
 
 // POST /users - Create a new user

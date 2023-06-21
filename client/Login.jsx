@@ -1,21 +1,23 @@
 import React, { useState } from "react";
+// const myApi = require("./api.cjs");
+
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleLogin = async () => {
-    const response = await fetch("https://jsonplaceholder.typicode.com/users");
-    const users = await response.json();
+    const response = await fetch(`http://localhost:3000/users/${username}`);
 
-    const user = users.find((user) => user.username === username);
+    const user = await response.json();
+    // const user = users.find((user) => user.username === username);
 
     if (!user) {
       setError("Username does not exist.");
       return;
     }
     // password is the last 4 digits of "lat"
-    const userPassword = user.address.geo.lat.slice(-4);
+    const userPassword = user.lat.slice(-4);
 
     if (user.username === username && userPassword === password) {
       console.log("successful login");

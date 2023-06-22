@@ -43,10 +43,10 @@ app.get("/users/:username", (req, res) => {
 
 // POST /users - Create a new user
 app.post("/users", (req, res) => {
-  const { name, email } = req.body;
+  const { name, username, lat, phone, email } = req.body;
   db.query(
-    "INSERT INTO users (name, email) VALUES (?, ?)",
-    [name, email],
+    "INSERT INTO users (name, username, lat, phone, email) VALUES (?, ?, ?, ?, ?)",
+    [name, username, lat, phone, email],
     (err, results) => {
       if (err) {
         console.error("Error executing the query: ", err);

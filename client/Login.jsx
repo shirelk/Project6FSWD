@@ -8,10 +8,10 @@ function Login() {
 
   const handleLogin = async () => {
     const response = await fetch(`http://localhost:3000/users/${username}`);
-
     const user = await response.json();
-    // const user = users.find((user) => user.username === username);
 
+    // const user = users.find((user) => user.username === username);
+    console.log(user);
     if (!user) {
       setError("Username does not exist.");
       return;

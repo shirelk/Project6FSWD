@@ -10,11 +10,11 @@ function Todos() {
     if (ttt) {
       setTodos(ttt);
     } else {
-      fetch("https://jsonplaceholder.typicode.com/todos")
+      fetch(`http://localhost:3000/todos/${user.id}`)
         .then((response) => response.json())
-        .then((json) => {
-          const userTodos = json.filter((todo) => todo.userId === user.id);
-          setTodos(userTodos);
+        .then((data) => {
+          setTodos(data);
+          localStorage.setItem("todos", JSON.stringify(data));
         });
     }
   }, []);
@@ -52,15 +52,15 @@ function Todos() {
 
   function setCheck(td) {
     return (
-      <dive>
+      <div>
         <input
           type="checkbox"
-          name={td.id}
+          id={td.id} // Update name to id
           checked={td.completed}
           onChange={(event) => handleCheckChange(event, td)}
         ></input>
         <label htmlFor={td.id}>{td.title}</label>
-      </dive>
+      </div>
     );
   }
 

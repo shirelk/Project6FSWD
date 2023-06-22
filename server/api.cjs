@@ -17,6 +17,7 @@ app.get("/users", (req, res) => {
       res.status(500).json({ error: "Failed to fetch users" });
       return;
     }
+    console.log(results);
     res.json(results);
   });
 });
@@ -29,13 +30,12 @@ app.get("/users/:username", (req, res) => {
     (err, results) => {
       if (err) {
         console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to fetch user" });
-        return;
+        return res.status(500).json({ error: "Failed to fetch user" });
       }
       if (results.length === 0) {
-        res.status(404).json({ error: "User not found" });
-        return;
+        return res.status(404).json({ error: "User not found" });
       }
+      console.log(results);
       res.json(results[0]);
     }
   );
@@ -114,7 +114,8 @@ app.get("/todos", (req, res) => {
 
 app.get("/todos/:id", (req, res) => {
   const todoId = req.params.id;
-  db.query("SELECT * FROM todos WHERE id = ?", [todoId], (err, results) => {
+  console.log(todoId);
+  db.query("SELECT * FROM todos WHERE userId = ?", [todoId], (err, results) => {
     if (err) {
       console.error("Error executing the query: ", err);
       res.status(500).json({ error: "Failed to fetch todo" });
@@ -124,7 +125,7 @@ app.get("/todos/:id", (req, res) => {
       res.status(404).json({ error: "Todo not found" });
       return;
     }
-    res.json(results[0]);
+    res.json(results);
   });
 });
 

@@ -114,7 +114,6 @@ app.get("/todos", (req, res) => {
 
 app.get("/todos/:id", (req, res) => {
   const todoId = req.params.id;
-  console.log(todoId);
   db.query("SELECT * FROM todos WHERE userId = ?", [todoId], (err, results) => {
     if (err) {
       console.error("Error executing the query: ", err);
@@ -203,7 +202,7 @@ app.get("/posts", (req, res) => {
 
 app.get("/posts/:id", (req, res) => {
   const postId = req.params.id;
-  db.query("SELECT * FROM posts WHERE id = ?", [postId], (err, results) => {
+  db.query("SELECT * FROM posts WHERE userId = ?", [postId], (err, results) => {
     if (err) {
       console.error("Error executing the query: ", err);
       res.status(500).json({ error: "Failed to fetch post" });
@@ -213,7 +212,7 @@ app.get("/posts/:id", (req, res) => {
       res.status(404).json({ error: "Post not found" });
       return;
     }
-    res.json(results[0]);
+    res.json(results);
   });
 });
 
@@ -288,10 +287,10 @@ app.get("/comments", (req, res) => {
   });
 });
 
-app.get("/comments/:id", (req, res) => {
-  const commentId = req.params.id;
+app.get("/comments/:pstId", (req, res) => {
+  const commentId = req.params.pstId;
   db.query(
-    "SELECT * FROM comments WHERE id = ?",
+    "SELECT * FROM comments WHERE postId = ?",
     [commentId],
     (err, results) => {
       if (err) {
@@ -303,7 +302,7 @@ app.get("/comments/:id", (req, res) => {
         res.status(404).json({ error: "Comment not found" });
         return;
       }
-      res.json(results[0]);
+      res.json(results);
     }
   );
 });

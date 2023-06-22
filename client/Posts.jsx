@@ -7,22 +7,21 @@ function Posts() {
 
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("ourUser"));
-    fetch("https://jsonplaceholder.typicode.com/posts")
+    fetch(`http://localhost:3000/posts/${user.id}`)
       .then((response) => response.json())
-      .then((json) => {
-        const userPosts = json.filter((post) => post.userId === user.id);
-        setPosts(userPosts);
+      .then((data) => {
+        setPosts(data);
+        localStorage.setItem("posts", JSON.stringify(data));
       });
   }, []);
 
   function postPressed(pst) {
     setSelectedPost(pst); //update selected post
     //show all comments related to the clicked post
-    fetch("https://jsonplaceholder.typicode.com/comments")
+    fetch(`http://localhost:3000/comments/${pst.id}`)
       .then((response) => response.json())
-      .then((json) => {
-        const postComments = json.filter((cmnts) => cmnts.postId === pst.id);
-        setComments(postComments);
+      .then((data) => {
+        setComments(data);
         const targetButton = document.getElementById("clickedBtn");
         if (targetButton) {
           const { top } = targetButton.getBoundingClientRect();

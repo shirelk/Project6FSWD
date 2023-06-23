@@ -7,25 +7,31 @@ function Login() {
   const [error, setError] = useState("");
 
   const handleLogin = async () => {
-    const response = await fetch(`http://localhost:3000/users/${username}`);
-    const user = await response.json();
+    // extract username and password from user_passwords table
+    const user = await fetch(
+      `http://localhost:3000/users_passwords/${username}`
+    ).then((response) => response.json());
+    if (user) {
+      console.log(user);
+      // check if password matches
+      if (user.password === password) {
+        // get user info from users table
+        const ourUser = await fetch(
+          `http://localhost:3000/users/${user.username}`
+        ).then((response) => response.json());
 
-    // const user = users.find((user) => user.username === username);
-    console.log(user);
-    if (!user) {
-      setError("Username does not exist.");
-      return;
+        // store user info in localStorage
+        localStorage.setItem("ourUser", JSON.stringify(ourUser));
+
+        // redirect to /Logged
+        window.location.href = "/Logged";
+      } else {
+        setError("Incorrect password");
+      }
     }
-    // password is the last 4 digits of "lat"
-    const userPassword = user.lat.slice(-4);
-
-    if (user.username === username && userPassword === password) {
-      console.log("successful login");
-      localStorage.removeItem("ourUser");
-      localStorage.setItem("ourUser", JSON.stringify(user));
-      document.location.href = "/logged";
-    } else {
-      setError("Incorrect password.");
+    // if username doesn't exist, display error message
+    else {
+      setError("Username doesn't exist");
     }
   };
 

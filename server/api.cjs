@@ -46,12 +46,7 @@ app.post("/users", (req, res) => {
   const { name, username, email, phone } = req.body;
   db.query(
     "INSERT INTO users (name, username, email, phone) VALUES (?, ?, ?, ?)",
-    [
-      name,
-      username,
-      email,
-      phone,
-    ],
+    [name, username, email, phone],
     (err, results) => {
       if (err) {
         console.error("Error executing the query: ", err);
@@ -371,7 +366,189 @@ app.delete("/comments/:id", (req, res) => {
   });
 });
 
-//-------------------------------users_passwords-----------------------------------
+//-----------------------------ALBUMS-----------------------------------
+app.get("/albums", (req, res) => {
+  db.query("SELECT * FROM albums", (err, results) => {
+    if (err) {
+      console.error("Error executing the query: ", err);
+      res.status(500).json({ error: "Failed to fetch albums" });
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get("/albums/:id", (req, res) => {
+  const albumId = req.params.id;
+  db.query(
+    "SELECT * FROM albums WHERE userId = ?",
+    [albumId],
+    (err, results) => {
+      if (err) {
+        console.error("Error executing the query: ", err);
+        res.status(500).json({ error: "Failed to fetch album" });
+        return;
+      }
+      if (results.length === 0) {
+        res.status(404).json({ error: "Album not found" });
+        return;
+      }
+      res.json(results);
+    }
+  );
+});
+
+// POST /albums - Create a new album
+app.post("/albums", (req, res) => {
+  const { title, userId } = req.body;
+  db.query(
+    "INSERT INTO albums (title, userId) VALUES (?, ?)",
+    [title, userId],
+    (err, results) => {
+      if (err) {
+        console.error("Error executing the query: ", err);
+        res.status(500).json({ error: "Failed to create album" });
+        return;
+      }
+      res.json({
+        message: "Album created successfully",
+        albumId: results.insertId,
+      });
+    }
+  );
+});
+
+// PUT /albums/:id - Update an existing album
+app.put("/albums/:id", (req, res) => {
+  const albumId = req.params.id;
+  const { title, userId } = req.body;
+  db.query(
+    "UPDATE albums SET title = ?, userId = ? WHERE id = ?",
+    [title, userId, albumId],
+    (err, results) => {
+      if (err) {
+        console.error("Error executing the query: ", err);
+        res.status(500).json({ error: "Failed to update album" });
+        return;
+      }
+      if (results.affectedRows === 0) {
+        res.status(404).json({ error: "Album not found" });
+        return;
+      }
+      res.json({ message: "Album updated successfully" });
+    }
+  );
+});
+
+// DELETE /albums/:id - Delete a album
+app.delete("/albums/:id", (req, res) => {
+  const albumId = req.params.id;
+  db.query("DELETE FROM albums WHERE id = ?", [albumId], (err, results) => {
+    if (err) {
+      console.error("Error executing the query: ", err);
+      res.status(500).json({ error: "Failed to delete album" });
+      return;
+    }
+    if (results.affectedRows === 0) {
+      res.status(404).json({ error: "Album not found" });
+      return;
+    }
+    res.json({ message: "Album deleted successfully" });
+  });
+});
+
+//-----------------------------PHOTOS-----------------------------------
+app.get("/photos", (req, res) => {
+  db.query("SELECT * FROM photos", (err, results) => {
+    if (err) {
+      console.error("Error executing the query: ", err);
+      res.status(500).json({ error: "Failed to fetch photos" });
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get("/photos/:id", (req, res) => {
+  const photoId = req.params.id;
+  db.query(
+    "SELECT * FROM photos WHERE albumId = ?",
+    [photoId],
+    (err, results) => {
+      if (err) {
+        console.error("Error executing the query: ", err);
+        res.status(500).json({ error: "Failed to fetch photo" });
+        return;
+      }
+      if (results.length === 0) {
+        res.status(404).json({ error: "Photo not found" });
+        return;
+      }
+      res.json(results);
+    }
+  );
+});
+
+// POST /photos - Create a new photo
+app.post("/photos", (req, res) => {
+  const { title, url, thumbnailUrl, albumId } = req.body;
+  db.query(
+    "INSERT INTO photos (title, url, thumbnailUrl, albumId) VALUES (?, ?, ?, ?)",
+    [title, url, thumbnailUrl, albumId],
+    (err, results) => {
+      if (err) {
+        console.error("Error executing the query: ", err);
+        res.status(500).json({ error: "Failed to create photo" });
+        return;
+      }
+      res.json({
+        message: "Photo created successfully",
+        photoId: results.insertId,
+      });
+    }
+  );
+});
+
+// PUT /photos/:id - Update an existing photo
+app.put("/photos/:id", (req, res) => {
+  const photoId = req.params.id;
+  const { title, url, thumbnailUrl, albumId } = req.body;
+  db.query(
+    "UPDATE photos SET title = ?, url = ?, thumbnailUrl = ?, albumId = ? WHERE id = ?",
+    [title, url, thumbnailUrl, albumId, photoId],
+    (err, results) => {
+      if (err) {
+        console.error("Error executing the query: ", err);
+        res.status(500).json({ error: "Failed to update photo" });
+        return;
+      }
+      if (results.affectedRows === 0) {
+        res.status(404).json({ error: "Photo not found" });
+        return;
+      }
+      res.json({ message: "Photo updated successfully" });
+    }
+  );
+});
+
+// DELETE /photos/:id - Delete a photo
+app.delete("/photos/:id", (req, res) => {
+  const photoId = req.params.id;
+  db.query("DELETE FROM photos WHERE id = ?", [photoId], (err, results) => {
+    if (err) {
+      console.error("Error executing the query: ", err);
+      res.status(500).json({ error: "Failed to delete photo" });
+      return;
+    }
+    if (results.affectedRows === 0) {
+      res.status(404).json({ error: "Photo not found" });
+      return;
+    }
+    res.json({ message: "Photo deleted successfully" });
+  });
+});
+
+//-----------------------------USERS_PASSWORDS-----------------------------------
 app.get("/users_passwords", (req, res) => {
   db.query("SELECT * FROM users_passwords", (err, results) => {
     if (err) {

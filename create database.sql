@@ -422,18 +422,18 @@ CREATE TABLE photos (
     albumId INT,
     title VARCHAR(255),
     url VARCHAR(255),
-    thumbnail_url VARCHAR(255),
+    thumbnailUrl VARCHAR(255),
     FOREIGN KEY (albumId) REFERENCES albums(id)
 );
 
-INSERT INTO photos (albumId, title, url, thumbnail_url)
+INSERT INTO photos (albumId, title, url, thumbnailUrl)
 VALUES
 (1, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
 (1, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
 (1, 'ullam ut quidem id aut vel consequuntur', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
 (1, 'doloribus ad provident suscipit at', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
 (1, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
-INSERT INTO photos (albumId, title, url, thumbnail_url)
+INSERT INTO photos (albumId, title, url, thumbnailUrl)
 VALUES
 -- Album ID 2
 (2, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
@@ -449,7 +449,7 @@ VALUES
 (3, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
 (3, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
 
-INSERT INTO photos (albumId, title, url, thumbnail_url)
+INSERT INTO photos (albumId, title, url, thumbnailUrl)
 VALUES
 -- Album ID 4
 (4, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
@@ -465,7 +465,7 @@ VALUES
 (5, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
 (5, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
 
-INSERT INTO photos (albumId, title, url, thumbnail_url)
+INSERT INTO photos (albumId, title, url, thumbnailUrl)
 VALUES
 -- Album ID 6
 (6, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
@@ -481,7 +481,7 @@ VALUES
 (7, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
 (7, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
 
-INSERT INTO photos (albumId, title, url, thumbnail_url)
+INSERT INTO photos (albumId, title, url, thumbnailUrl)
 VALUES
 -- Album ID 8
 (8, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
@@ -497,7 +497,7 @@ VALUES
 (9, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
 (9, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
 
-INSERT INTO photos (albumId, title, url, thumbnail_url)
+INSERT INTO photos (albumId, title, url, thumbnailUrl)
 VALUES
 -- Album ID 10
 (10, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
@@ -513,7 +513,7 @@ VALUES
 (11, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
 (11, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
 
-INSERT INTO photos (albumId, title, url, thumbnail_url)
+INSERT INTO photos (albumId, title, url, thumbnailUrl)
 VALUES
 -- Album ID 12
 (12, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
@@ -529,7 +529,7 @@ VALUES
 (13, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
 (13, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
 
-INSERT INTO photos (albumId, title, url, thumbnail_url)
+INSERT INTO photos (albumId, title, url, thumbnailUrl)
 VALUES
 -- Album ID 14
 (14, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
@@ -559,7 +559,7 @@ VALUES
 (17, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
 (17, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
 
-INSERT INTO photos (albumId, title, url, thumbnail_url)
+INSERT INTO photos (albumId, title, url, thumbnailUrl)
 VALUES
 -- Album ID 18
 (18, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
@@ -618,7 +618,7 @@ VALUES
 (25, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
 
 -- Album ID 26
-INSERT INTO photos (albumId, title, url, thumbnail_url)
+INSERT INTO photos (albumId, title, url, thumbnailUrl)
 VALUES
 (26, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
 (26, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
@@ -627,7 +627,7 @@ VALUES
 (26, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
 
 -- Album ID 27
-INSERT INTO photos (albumId, title, url, thumbnail_url)
+INSERT INTO photos (albumId, title, url, thumbnailUrl)
 VALUES
 (27, 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
 (27, 'qui est esse', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
@@ -636,7 +636,7 @@ VALUES
 (27, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
 
 -- Album ID 28
-INSERT INTO photos (albumId, title, url, thumbnail_url)
+INSERT INTO photos (albumId, title, url, thumbnailUrl)
 VALUES
 (28, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
 (28, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
@@ -645,7 +645,7 @@ VALUES
 (28, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
 
 -- Album ID 29
-INSERT INTO photos (albumId, title, url, thumbnail_url)
+INSERT INTO photos (albumId, title, url, thumbnailUrl)
 VALUES
 (29, 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
 (29, 'qui est esse', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
@@ -654,7 +654,7 @@ VALUES
 (29, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
 
 -- Album ID 30
-INSERT INTO photos (albumId, title, url, thumbnail_url)
+INSERT INTO photos (albumId, title, url, thumbnailUrl)
 VALUES
 (30, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
 (30, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),

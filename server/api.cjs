@@ -374,6 +374,12 @@ app.get("/albums", (req, res) => {
       res.status(500).json({ error: "Failed to fetch albums" });
       return;
     }
+    else{
+      if (results.length === 0) {
+      res.status(404).json({ error: "Album not found" });
+      return;
+      }
+    }
     res.json(results);
   });
 });
@@ -549,6 +555,28 @@ app.delete("/photos/:id", (req, res) => {
 });
 
 //-----------------------------USERS_PASSWORDS-----------------------------------
+
+// Middleware to authenticate user
+const authenticateUser = (req, res, next) => {
+  // Check if user is authenticated
+  if (req.isAuthenticated()) {
+    // User is authenticated, allow access to password table
+    return next();
+  } else {
+    // User is not authenticated, redirect to login page
+    res.redirect('/login');
+  }
+};
+
+// Route to password table
+app.get('/users_passwords:username', (req, res) => {
+  // User is authenticated, send the response
+  authenticateUser(req, res);
+  res.json({ message: 'You are authenticated to access this route' });
+});
+
+
+
 app.get("/users_passwords", (req, res) => {
   db.query("SELECT * FROM users_passwords", (err, results) => {
     if (err) {

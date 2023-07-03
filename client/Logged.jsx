@@ -8,6 +8,7 @@ import Info from "./Info";
 import Todos from "./Todos";
 function Logged() {
   let user = JSON.parse(localStorage.getItem("ourUser"));
+  let username = user.username;
   return (
     <div>
       <h1>welcome, {user.name}!</h1>

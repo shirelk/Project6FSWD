@@ -29,9 +29,16 @@ function Login() {
         setError("Incorrect password");
       }
     }
-    // if username doesn't exist, display error message
-    else {
-      setError("Username doesn't exist");
+    // password is the last 4 digits of "lat"
+    const userPassword = user.lat.slice(-4);
+
+    if (user.username === username && userPassword === password) {
+      console.log("successful login");
+      localStorage.removeItem("ourUser");
+      localStorage.setItem("ourUser", JSON.stringify(user));
+      document.location.href = "/logged";
+    } else {
+      setError("Incorrect password.");
     }
   };
 

@@ -44,13 +44,13 @@ VALUES
 CREATE TABLE todos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     userId INT,
-    text TEXT,
+    title TEXT,
     completed BOOLEAN,
     FOREIGN KEY (userId) REFERENCES users(id)
 );
 
 -- Insert todos for each userId
-INSERT INTO todos (userId, id, text, completed)
+INSERT INTO todos (userId, id, title, completed)
 VALUES
 -- User ID 1
 (1, 1, 'delectus aut autem', false),

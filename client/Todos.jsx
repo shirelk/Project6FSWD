@@ -10,7 +10,7 @@ function Todos() {
     if (ttt) {
       setTodos(ttt);
     } else {
-      fetch(`http://localhost:3000/todos/${user.id}`)
+      fetch(`http://localhost:3000/todos/?userId=${user.id}`)
         .then((response) => response.json())
         .then((data) => {
           setTodos(data);

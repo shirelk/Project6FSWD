@@ -7,7 +7,7 @@ function Posts() {
 
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("ourUser"));
-    fetch(`http://localhost:3000/posts/${user.id}`)
+    fetch(`http://localhost:3000/posts/?userId=${user.id}`)
       .then((response) => response.json())
       .then((data) => {
         setPosts(data);
@@ -18,7 +18,7 @@ function Posts() {
   function postPressed(pst) {
     setSelectedPost(pst); //update selected post
     //show all comments related to the clicked post
-    fetch(`http://localhost:3000/comments/${pst.id}`)
+    fetch(`http://localhost:3000/comments/?id=${pst.id}`)
       .then((response) => response.json())
       .then((data) => {
         setComments(data);

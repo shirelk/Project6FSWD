@@ -48,6 +48,16 @@ function Todos() {
     });
     setTodos(updatedTodos);
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    
+    // Update the todos in the database
+    fetch(`http://localhost:3000/todos/${td.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ completed: event.target.checked }),
+    });
+    console.log("Updated todo in the database");
   }
 
   function setCheck(td) {
@@ -59,7 +69,7 @@ function Todos() {
           checked={td.completed}
           onChange={(event) => handleCheckChange(event, td)}
         ></input>
-        <label htmlFor={td.id}>{td.title}</label>
+        <label htmlFor={td.id}> {td.title}</label>
       </div>
     );
   }

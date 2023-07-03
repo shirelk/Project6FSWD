@@ -23,7 +23,7 @@ function Login() {
       console.log("successful login");
       localStorage.removeItem("ourUser");
       localStorage.setItem("ourUser", JSON.stringify(user));
-      document.location.href = "/logged";
+      document.location.href = `http://localhost:3000/users/${username}`;
     } else {
       setError("Incorrect password.");
     }

@@ -43,10 +43,10 @@ app.get("/users/:username", (req, res) => {
 
 // POST /users - Create a new user
 app.post("/users", (req, res) => {
-  const { name, username, lat, phone, email } = req.body;
+  const { name, username, email, phone } = req.body;
   db.query(
-    "INSERT INTO users (name, username, lat, phone, email) VALUES (?, ?, ?, ?, ?)",
-    [name, username, lat, phone, email],
+    "INSERT INTO users (name, username, email, phone) VALUES (?, ?, ?, ?)",
+    [name, username, email, phone],
     (err, results) => {
       if (err) {
         console.error("Error executing the query: ", err);
@@ -364,6 +364,310 @@ app.delete("/comments/:id", (req, res) => {
     }
     res.json({ message: "Comment deleted successfully" });
   });
+});
+
+//-----------------------------ALBUMS-----------------------------------
+app.get("/albums", (req, res) => {
+  db.query("SELECT * FROM albums", (err, results) => {
+    if (err) {
+      console.error("Error executing the query: ", err);
+      res.status(500).json({ error: "Failed to fetch albums" });
+      return;
+    }
+    else{
+      if (results.length === 0) {
+      res.status(404).json({ error: "Album not found" });
+      return;
+      }
+    }
+    res.json(results);
+  });
+});
+
+app.get("/albums/:id", (req, res) => {
+  const albumId = req.params.id;
+  db.query(
+    "SELECT * FROM albums WHERE userId = ?",
+    [albumId],
+    (err, results) => {
+      if (err) {
+        console.error("Error executing the query: ", err);
+        res.status(500).json({ error: "Failed to fetch album" });
+        return;
+      }
+      if (results.length === 0) {
+        res.status(404).json({ error: "Album not found" });
+        return;
+      }
+      res.json(results);
+    }
+  );
+});
+
+// POST /albums - Create a new album
+app.post("/albums", (req, res) => {
+  const { title, userId } = req.body;
+  db.query(
+    "INSERT INTO albums (title, userId) VALUES (?, ?)",
+    [title, userId],
+    (err, results) => {
+      if (err) {
+        console.error("Error executing the query: ", err);
+        res.status(500).json({ error: "Failed to create album" });
+        return;
+      }
+      res.json({
+        message: "Album created successfully",
+        albumId: results.insertId,
+      });
+    }
+  );
+});
+
+// PUT /albums/:id - Update an existing album
+app.put("/albums/:id", (req, res) => {
+  const albumId = req.params.id;
+  const { title, userId } = req.body;
+  db.query(
+    "UPDATE albums SET title = ?, userId = ? WHERE id = ?",
+    [title, userId, albumId],
+    (err, results) => {
+      if (err) {
+        console.error("Error executing the query: ", err);
+        res.status(500).json({ error: "Failed to update album" });
+        return;
+      }
+      if (results.affectedRows === 0) {
+        res.status(404).json({ error: "Album not found" });
+        return;
+      }
+      res.json({ message: "Album updated successfully" });
+    }
+  );
+});
+
+// DELETE /albums/:id - Delete a album
+app.delete("/albums/:id", (req, res) => {
+  const albumId = req.params.id;
+  db.query("DELETE FROM albums WHERE id = ?", [albumId], (err, results) => {
+    if (err) {
+      console.error("Error executing the query: ", err);
+      res.status(500).json({ error: "Failed to delete album" });
+      return;
+    }
+    if (results.affectedRows === 0) {
+      res.status(404).json({ error: "Album not found" });
+      return;
+    }
+    res.json({ message: "Album deleted successfully" });
+  });
+});
+
+//-----------------------------PHOTOS-----------------------------------
+app.get("/photos", (req, res) => {
+  db.query("SELECT * FROM photos", (err, results) => {
+    if (err) {
+      console.error("Error executing the query: ", err);
+      res.status(500).json({ error: "Failed to fetch photos" });
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get("/photos/:id", (req, res) => {
+  const photoId = req.params.id;
+  db.query(
+    "SELECT * FROM photos WHERE albumId = ?",
+    [photoId],
+    (err, results) => {
+      if (err) {
+        console.error("Error executing the query: ", err);
+        res.status(500).json({ error: "Failed to fetch photo" });
+        return;
+      }
+      if (results.length === 0) {
+        res.status(404).json({ error: "Photo not found" });
+        return;
+      }
+      res.json(results);
+    }
+  );
+});
+
+// POST /photos - Create a new photo
+app.post("/photos", (req, res) => {
+  const { title, url, thumbnailUrl, albumId } = req.body;
+  db.query(
+    "INSERT INTO photos (title, url, thumbnailUrl, albumId) VALUES (?, ?, ?, ?)",
+    [title, url, thumbnailUrl, albumId],
+    (err, results) => {
+      if (err) {
+        console.error("Error executing the query: ", err);
+        res.status(500).json({ error: "Failed to create photo" });
+        return;
+      }
+      res.json({
+        message: "Photo created successfully",
+        photoId: results.insertId,
+      });
+    }
+  );
+});
+
+// PUT /photos/:id - Update an existing photo
+app.put("/photos/:id", (req, res) => {
+  const photoId = req.params.id;
+  const { title, url, thumbnailUrl, albumId } = req.body;
+  db.query(
+    "UPDATE photos SET title = ?, url = ?, thumbnailUrl = ?, albumId = ? WHERE id = ?",
+    [title, url, thumbnailUrl, albumId, photoId],
+    (err, results) => {
+      if (err) {
+        console.error("Error executing the query: ", err);
+        res.status(500).json({ error: "Failed to update photo" });
+        return;
+      }
+      if (results.affectedRows === 0) {
+        res.status(404).json({ error: "Photo not found" });
+        return;
+      }
+      res.json({ message: "Photo updated successfully" });
+    }
+  );
+});
+
+// DELETE /photos/:id - Delete a photo
+app.delete("/photos/:id", (req, res) => {
+  const photoId = req.params.id;
+  db.query("DELETE FROM photos WHERE id = ?", [photoId], (err, results) => {
+    if (err) {
+      console.error("Error executing the query: ", err);
+      res.status(500).json({ error: "Failed to delete photo" });
+      return;
+    }
+    if (results.affectedRows === 0) {
+      res.status(404).json({ error: "Photo not found" });
+      return;
+    }
+    res.json({ message: "Photo deleted successfully" });
+  });
+});
+
+//-----------------------------USERS_PASSWORDS-----------------------------------
+
+// Middleware to authenticate user
+const authenticateUser = (req, res, next) => {
+  // Check if user is authenticated
+  if (req.isAuthenticated()) {
+    // User is authenticated, allow access to password table
+    return next();
+  } else {
+    // User is not authenticated, redirect to login page
+    res.redirect('/login');
+  }
+};
+
+// Route to password table
+app.get('/users_passwords:username', (req, res) => {
+  // User is authenticated, send the response
+  authenticateUser(req, res);
+  res.json({ message: 'You are authenticated to access this route' });
+});
+
+
+
+app.get("/users_passwords", (req, res) => {
+  db.query("SELECT * FROM users_passwords", (err, results) => {
+    if (err) {
+      console.error("Error executing the query: ", err);
+      res.status(500).json({ error: "Failed to fetch users_passwords" });
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get("/users_passwords/:username", (req, res) => {
+  const username = req.params.username;
+  db.query(
+    "SELECT * FROM users_passwords WHERE username = ?",
+    [username],
+    (err, results) => {
+      if (err) {
+        console.error("Error executing the query: ", err);
+        return res.status(500).json({ error: "Failed to fetch user" });
+      }
+      if (results.length === 0) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      console.log(results);
+      res.json(results[0]);
+    }
+  );
+});
+
+// POST /users_passwords - Create a new user
+app.post("/users_passwords", (req, res) => {
+  const { username, password } = req.body;
+  db.query(
+    "INSERT INTO users_passwords (username, password) VALUES (?, ? )",
+    [username, password],
+    (err, results) => {
+      if (err) {
+        console.error("Error executing the query: ", err);
+        res.status(500).json({ error: "Failed to create user" });
+        return;
+      }
+      res.json({
+        message: "User created successfully",
+        userId: results.insertId,
+      });
+    }
+  );
+});
+
+// PUT /users_passwords/:id - Update an existing user
+app.put("/users_passwords/:id", (req, res) => {
+  const userId = req.params.id;
+  const { username, password } = req.body;
+  db.query(
+    "UPDATE users_passwords SET username = ?, password = ? WHERE id = ?",
+    [username, password, userId],
+    (err, results) => {
+      if (err) {
+        console.error("Error executing the query: ", err);
+        res.status(500).json({ error: "Failed to update user" });
+        return;
+      }
+      if (results.affectedRows === 0) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+      res.json({ message: "User updated successfully" });
+    }
+  );
+});
+
+// DELETE /users_passwords/:id - Delete a user
+app.delete("/users_passwords/:id", (req, res) => {
+  const userId = req.params.id;
+  db.query(
+    "DELETE FROM users_passwords WHERE id = ?",
+    [userId],
+    (err, results) => {
+      if (err) {
+        console.error("Error executing the query: ", err);
+        res.status(500).json({ error: "Failed to delete user" });
+        return;
+      }
+      if (results.affectedRows === 0) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+      res.json({ message: "User deleted successfully" });
+    }
+  );
 });
 
 // Start the server

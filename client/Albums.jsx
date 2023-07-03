@@ -10,7 +10,7 @@ function Albums() {
 
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("ourUser"));
-    fetch("https://jsonplaceholder.typicode.com/albums")
+    fetch(`http://localhost:3000/albums`)
       .then((response) => response.json())
       .then((json) => {
         const userAlbums = json.filter((album) => album.userId === user.id);
@@ -20,7 +20,7 @@ function Albums() {
 
   useEffect(() => {
     if (selectedAlbum) {
-      fetch("https://jsonplaceholder.typicode.com/photos")
+      fetch(`http://localhost:3000/photos`)
         .then((response) => response.json())
         .then((json) => {
           const albumPhotos = json.filter(

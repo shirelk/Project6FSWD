@@ -15,13 +15,21 @@ function Register() {
     const userData = {
       name,
       username,
-      lat: password,
-      phone,
       email,
+      phone,
     };
 
     try {
-      const response = await fetch("http://localhost:3000/users", {
+      // insert into users_passwords table first
+      const psw_table = await fetch("http://localhost:3000/users_passwords", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const users_table = await fetch("http://localhost:3000/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,8 +37,15 @@ function Register() {
         body: JSON.stringify(userData),
       });
 
-      if (response.ok) {
+      if (psw_table.ok && users_table.ok) {
         console.log("User signed up successfully!");
+        // insert ourUser into localStorage
+        const ourUser = await fetch(
+          `http://localhost:3000/users/${username}`
+        ).then((response) => response.json());
+        localStorage.setItem("ourUser", JSON.stringify(ourUser));
+        // redirect to /logged
+        window.location.href = "/logged";
         // Redirect to the login page or perform any other action
       } else {
         setError("Failed to sign up. Please try again.");

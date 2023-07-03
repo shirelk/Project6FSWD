@@ -8,30 +8,34 @@ import Info from "./Info";
 import Todos from "./Todos";
 function Logged() {
   let user = JSON.parse(localStorage.getItem("ourUser"));
-  let username = user.username;
+  let username = user.id;
+  //const userID = user.id;
+  const userURL = `/users/${username}`;
+
   return (
     <div>
       <h1>welcome, {user.name}!</h1>
       <button className="mainBtn">
-        <Link to="/">log out</Link>
+        <Link to={`/`}>log out</Link>
       </button>
       <button className="mainBtn">
-        <Link to="/logged/albums">albums</Link>
+        <Link to={`${userURL}/albums`}>Albums</Link>
       </button>
       <button className="mainBtn">
-        <Link to="/logged/posts">posts</Link>
+        <Link to={`${userURL}/posts`}>Posts</Link>
       </button>
       <button className="mainBtn">
-        <Link to="/logged/todos">todos</Link>
+        <Link to={`${userURL}/todos`}>Todos</Link>
       </button>
       <button className="mainBtn">
-        <Link to="/logged/info">info</Link>
+        <Link to={`${userURL}/info`}>Info</Link>
       </button>
       <Routes>
-        <Route path="/albums" element={<Albums />} />
-        <Route path="/posts" element={<Posts />} />
-        <Route path="/todos" element={<Todos />} />
-        <Route path="/info" element={<Info />} />
+        <Route path={`${userURL}/albums`} element={<Albums />} />
+        <Route path={`${userURL}/posts`} element={<Posts />} />
+        <Route path={`${userURL}/todos`} element={<Todos />} />
+        <Route path={`${userURL}/info`} element={<Info />} />
+        {/* <Route path={`/users/:username`} element={<UserProfile />} /> */}
       </Routes>
     </div>
   );

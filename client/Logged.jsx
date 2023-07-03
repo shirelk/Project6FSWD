@@ -31,10 +31,10 @@ function Logged() {
         <Link to={`${userURL}/info`}>Info</Link>
       </button>
       <Routes>
-        <Route path={`${userURL}/albums`} element={<Albums />} />
-        <Route path={`${userURL}/posts`} element={<Posts />} />
-        <Route path={`${userURL}/todos`} element={<Todos />} />
-        <Route path={`${userURL}/info`} element={<Info />} />
+        <Route path={`/albums`} element={<Albums />} />
+        <Route path={`/posts`} element={<Posts />} />
+        <Route path={`/todos`} element={<Todos />} />
+        <Route path={`/info`} element={<Info />} />
         {/* <Route path={`/users/:username`} element={<UserProfile />} /> */}
       </Routes>
     </div>

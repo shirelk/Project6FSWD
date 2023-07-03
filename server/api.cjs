@@ -116,8 +116,9 @@ app.delete("/users/:id", (req, res) => {
 });
 
 //---------------------------------TODOS-------------------------------------
-app.get("/users/:userId/todos", (req, res) => {
-  db.query("SELECT * FROM todos", (err, results) => {
+app.get("/todos", (req, res) => {
+  const userId = req.query.userId; // Use req.query.userId instead of req.params.userId
+  db.query("SELECT * FROM todos WHERE userId = ?", [userId], (err, results) => {
     if (err) {
       handleDatabaseError(res, err, "Failed to fetch users");
       return;
@@ -126,7 +127,7 @@ app.get("/users/:userId/todos", (req, res) => {
   });
 });
 
-app.get("/users/:userId/todos/:id", (req, res) => {
+app.get("/todos/:id", (req, res) => {
   const todoId = req.params.id;
   db.query("SELECT * FROM todos WHERE id = ?", [todoId], (err, results) => {
     if (err) {
@@ -142,7 +143,7 @@ app.get("/users/:userId/todos/:id", (req, res) => {
 });
 
 // POST /todos - Create a new todo
-app.post("/users/:userId/todos", (req, res) => {
+app.post("/todos", (req, res) => {
   const { title, completed, userId } = req.body;
   db.query(
     "INSERT INTO todos (title, completed, userId) VALUES (?, ?, ?)",
@@ -161,7 +162,7 @@ app.post("/users/:userId/todos", (req, res) => {
 });
 
 // PUT /todos/:id - Update an existing todo
-app.put("/users/:userId/todos/:id", (req, res) => {
+app.put("/todos/:id", (req, res) => {
   const todoId = req.params.id;
   const { title, completed, userId } = req.body;
   db.query(
@@ -182,7 +183,7 @@ app.put("/users/:userId/todos/:id", (req, res) => {
 });
 
 // DELETE /todos/:id - Delete a todo
-app.delete("/users/:userId/todos/:id", (req, res) => {
+app.delete("/todos/:id", (req, res) => {
   const todoId = req.params.id;
   db.query("DELETE FROM todos WHERE id = ?", [todoId], (err, results) => {
     if (err) {
@@ -198,8 +199,8 @@ app.delete("/users/:userId/todos/:id", (req, res) => {
 });
 
 //------------------------------POSTS-------------------------------------------
-app.get("/users/:userId/posts", (req, res) => {
-  const userId = req.params.userId;
+app.get("/posts", (req, res) => {
+  const userId = req.query.userId; // Use req.query.userId instead of req.params.userId
   console.log("we are here");
   db.query("SELECT * FROM posts WHERE userId = ?", [userId], (err, results) => {
     if (err) {
@@ -210,7 +211,7 @@ app.get("/users/:userId/posts", (req, res) => {
   });
 });
 
-app.get("/users/:userId/posts/:id", (req, res) => {
+app.get("/posts/:id", (req, res) => {
   const postId = req.params.id;
   db.query("SELECT * FROM posts WHERE postId = ?", [postId], (err, results) => {
     if (err) {
@@ -226,7 +227,7 @@ app.get("/users/:userId/posts/:id", (req, res) => {
 });
 
 // POST /posts - Create a new post
-app.post("/users/:userId/posts", (req, res) => {
+app.post("/posts", (req, res) => {
   const { title, body, userId } = req.body;
   db.query(
     "INSERT INTO posts (title, body, userId) VALUES (?, ?, ?)",
@@ -245,7 +246,7 @@ app.post("/users/:userId/posts", (req, res) => {
 });
 
 // PUT /posts/:id - Update an existing post
-app.put("/users/:userId/posts/:id", (req, res) => {
+app.put("/posts/:id", (req, res) => {
   const postId = req.params.id;
   const { title, body, userId } = req.body;
   db.query(
@@ -266,7 +267,7 @@ app.put("/users/:userId/posts/:id", (req, res) => {
 });
 
 // DELETE /posts/:id - Delete a post
-app.delete("/users/:userId/posts/:id", (req, res) => {
+app.delete("/posts/:id", (req, res) => {
   const postId = req.params.id;
   db.query("DELETE FROM posts WHERE id = ?", [postId], (err, results) => {
     if (err) {
@@ -282,22 +283,17 @@ app.delete("/users/:userId/posts/:id", (req, res) => {
 });
 
 //----------------------COMMENTS------------------------------------
-app.get("/users/:userId/comments", (req, res) => {
-  const userId = req.params.userId;
-  db.query(
-    "SELECT * FROM comments WHERE userId = ?",
-    [userId],
-    (err, results) => {
-      if (err) {
-        handleDatabaseError(res, err, "Failed to fetch users");
-        return;
-      }
-      res.json(results);
+app.get("/comments", (req, res) => {
+  db.query("SELECT * FROM comments", (err, results) => {
+    if (err) {
+      handleDatabaseError(res, err, "Failed to fetch users");
+      return;
     }
-  );
+    res.json(results);
+  });
 });
 
-app.get("/users/:userId/comments/:pstId", (req, res) => {
+app.get("/comments/:pstId", (req, res) => {
   const commentId = req.params.pstId;
   db.query(
     "SELECT * FROM comments WHERE postId = ?",
@@ -317,7 +313,7 @@ app.get("/users/:userId/comments/:pstId", (req, res) => {
 });
 
 // POST /comments - Create a new comment
-app.post("/users/:userId/comments", (req, res) => {
+app.post("/comments", (req, res) => {
   const { postId, name, email, body } = req.body;
   db.query(
     "INSERT INTO comments (postId, name, email, body) VALUES (?, ?, ?, ?)",
@@ -336,7 +332,7 @@ app.post("/users/:userId/comments", (req, res) => {
 });
 
 // PUT /comments/:id - Update an existing comment
-app.put("/users/:userId/comments/:id", (req, res) => {
+app.put("/comments/:id", (req, res) => {
   const commentId = req.params.id;
   const { postId, name, email, body } = req.body;
   db.query(
@@ -357,7 +353,7 @@ app.put("/users/:userId/comments/:id", (req, res) => {
 });
 
 // DELETE /comments/:id - Delete a comment
-app.delete("/users/:userId/comments/:id", (req, res) => {
+app.delete("/comments/:id", (req, res) => {
   const commentId = req.params.id;
   db.query("DELETE FROM comments WHERE id = ?", [commentId], (err, results) => {
     if (err) {

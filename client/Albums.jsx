@@ -13,20 +13,22 @@ function Albums() {
     fetch(`http://localhost:3000/albums/?userId=${user.id}`)
       .then((response) => response.json())
       .then((json) => {
-        setAlbums(json);
-        localStorage.setItem("albums", JSON.stringify(json));
+        const userAlbums = json.filter((album) => album.userId === user.id);
+        setAlbums(userAlbums);
+        localStorage.setItem("albums", JSON.stringify(userAlbums));
       });
   }, []);
 
   useEffect(() => {
     if (selectedAlbum) {
-      const albumPhotos = fetch(
-        fetch(`http://localhost:3000/photos/?albumId=${selectedAlbum.id}`)
-      )
+      fetch(fetch(`http://localhost:3000/photos/?albumId=${selectedAlbum.id}`))
         .then((response) => response.json())
         .then((json) => {
-          setPhotos(json);
-          localStorage.setItem("photos", JSON.stringify(json));
+          const albumPhotos = json.filter(
+            (phtos) => phtos.albumId === selectedAlbum.id
+          );
+          setPhotos(albumPhotos);
+          localStorage.setItem("photos", JSON.stringify(albumPhotos));
           setDisplayedPhotos(albumPhotos.slice(start, start + limit));
         });
     }

@@ -6,17 +6,13 @@ function Todos() {
 
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("ourUser"));
-    let ttt = JSON.parse(localStorage.getItem("todos"));
-    if (ttt) {
-      setTodos(ttt);
-    } else {
-      fetch(`http://localhost:3000/todos/${user.id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setTodos(data);
-          localStorage.setItem("todos", JSON.stringify(data));
-        });
-    }
+
+    fetch(`http://localhost:3000/todos/${user.id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setTodos(data);
+        localStorage.setItem("todos", JSON.stringify(data));
+      });
   }, []);
 
   useEffect(() => {
@@ -48,14 +44,14 @@ function Todos() {
     });
     setTodos(updatedTodos);
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
-    
+
     // Update the todos in the database
     fetch(`http://localhost:3000/todos/${td.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ completed: event.target.checked }),
+      body: JSON.stringify({title: td.title, completed: event.target.checked, userId: td.userId}),
     });
     console.log("Updated todo in the database");
   }

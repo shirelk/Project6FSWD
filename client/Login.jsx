@@ -7,27 +7,33 @@ function Login() {
   const [error, setError] = useState("");
 
   const handleLogin = async () => {
-    // extract username and password from user_passwords table
-    const user = await fetch(
-      `http://localhost:3000/users_passwords/${username}`
-    ).then((response) => response.json());
-    if (user) {
-      console.log(user);
-      // check if password matches
-      if (user.password === password) {
-        // get user info from users table
-        const ourUser = await fetch(
-          `http://localhost:3000/users/${user.username}`
-        ).then((response) => response.json());
+    const response = await fetch(`http://localhost:3000/users/${username}`);
+    const user = await response.json();
+    // // extract username and password from user_passwords table
+    // const user = await fetch(
+    //   `http://localhost:3000/users_passwords/${username}`
+    // ).then((response) => response.json());
+    // if (user) {
+    //   console.log(user);
+    //   // check if password matches
+    //   if (user.password === password) {
+    //     // get user info from users table
+    //     const ourUser = await fetch(
+    //       `http://localhost:3000/users/${user.username}`
+    //     ).then((response) => response.json());
+    // const user = users.find((user) => user.username === username);
+    console.log(user);
+    if (!user) {
+      setError("Username does not exist.");
+      return;
+      //     // store user info in localStorage
+      //     localStorage.setItem("ourUser", JSON.stringify(ourUser));
 
-        // store user info in localStorage
-        localStorage.setItem("ourUser", JSON.stringify(ourUser));
-
-        // redirect to /Logged
-        window.location.href = "/Logged";
-      } else {
-        setError("Incorrect password");
-      }
+      //     // redirect to /Logged
+      //     window.location.href = `/users/${username}`;
+      //   } else {
+      //     setError("Incorrect password");
+      //   }
     }
     // password is the last 4 digits of "lat"
     const userPassword = user.lat.slice(-4);
@@ -36,7 +42,8 @@ function Login() {
       console.log("successful login");
       localStorage.removeItem("ourUser");
       localStorage.setItem("ourUser", JSON.stringify(user));
-      document.location.href = "/logged";
+      //document.location.href = "/logged";
+      document.location.href = `/users/${username}`;
     } else {
       setError("Incorrect password.");
     }

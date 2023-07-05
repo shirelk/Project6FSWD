@@ -6,7 +6,6 @@ const db = require("./MySQL.cjs");
 
 // Middleware to parse JSON request bodies
 app.use(express.json());
-app.use(bodyParser.json());
 app.use(cors());
 
 function handleDatabaseError(res, error, errorMessage) {
@@ -118,7 +117,8 @@ app.delete("/users/:id", (req, res) => {
 
 //---------------------------------TODOS-------------------------------------
 app.get("/todos", (req, res) => {
-  db.query("SELECT * FROM todos", (err, results) => {
+  const userId = req.query.userId; // Use req.query.userId instead of req.params.userId
+  db.query("SELECT * FROM todos WHERE userId = ?", [userId], (err, results) => {
     if (err) {
       handleDatabaseError(res, err, "Failed to fetch users");
       return;
@@ -129,7 +129,7 @@ app.get("/todos", (req, res) => {
 
 app.get("/todos/:id", (req, res) => {
   const todoId = req.params.id;
-  db.query("SELECT * FROM todos WHERE userId = ?", [todoId], (err, results) => {
+  db.query("SELECT * FROM todos WHERE id = ?", [todoId], (err, results) => {
     if (err) {
       handleDatabaseError(res, err, "Failed to fetch users");
       return;

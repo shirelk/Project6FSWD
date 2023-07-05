@@ -8,7 +8,7 @@ import Info from "./Info";
 import Todos from "./Todos";
 function Logged() {
   let user = JSON.parse(localStorage.getItem("ourUser"));
-  let username = user.id;
+  let username = user.username;
   //const userID = user.id;
   const userURL = `/users/${username}`;
 

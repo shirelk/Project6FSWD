@@ -51,7 +51,11 @@ function Todos() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({title: td.title, completed: event.target.checked, userId: td.userId}),
+      body: JSON.stringify({
+        title: td.title,
+        completed: event.target.checked,
+        userId: td.userId,
+      }),
     });
     console.log("Updated todo in the database");
   }

@@ -9,12 +9,16 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
 
+function handleDatabaseError(res, error, errorMessage) {
+  console.error("Error executing the query: ", error);
+  res.status(500).json({ error: errorMessage });
+}
+
 //------------------------------------USERS-------------------------------------
 app.get("/users", (req, res) => {
   db.query("SELECT * FROM users", (err, results) => {
     if (err) {
-      console.error("Error executing the query: ", err);
-      res.status(500).json({ error: "Failed to fetch users" });
+      handleDatabaseError(res, err, "Failed to fetch users");
       return;
     }
     console.log(results);
@@ -29,8 +33,8 @@ app.get("/users/:username", (req, res) => {
     [username],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        return res.status(500).json({ error: "Failed to fetch user" });
+        handleDatabaseError(res, err, "Failed to fetch users");
+        return;
       }
       if (results.length === 0) {
         return res.status(404).json({ error: "User not found" });
@@ -41,16 +45,30 @@ app.get("/users/:username", (req, res) => {
   );
 });
 
+app.get("/users/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("SELECT * FROM users WHERE id = ?", [id], (err, results) => {
+    if (err) {
+      handleDatabaseError(res, err, "Failed to fetch users");
+      return;
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    console.log(results);
+    res.json(results[0]);
+  });
+});
+
 // POST /users - Create a new user
 app.post("/users", (req, res) => {
-  const { name, username, email, phone } = req.body;
+  const { name, username, lat, phone, email } = req.body;
   db.query(
-    "INSERT INTO users (name, username, email, phone) VALUES (?, ?, ?, ?)",
-    [name, username, email, phone],
+    "INSERT INTO users (name, username, lat, phone, email) VALUES (?, ?, ?, ?, ?)",
+    [name, username, lat, phone, email],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to create user" });
+        handleDatabaseError(res, err, "Failed to fetch users");
         return;
       }
       res.json({
@@ -70,8 +88,7 @@ app.put("/users/:id", (req, res) => {
     [name, email, userId],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to update user" });
+        handleDatabaseError(res, err, "Failed to fetch users");
         return;
       }
       if (results.affectedRows === 0) {
@@ -88,8 +105,7 @@ app.delete("/users/:id", (req, res) => {
   const userId = req.params.id;
   db.query("DELETE FROM users WHERE id = ?", [userId], (err, results) => {
     if (err) {
-      console.error("Error executing the query: ", err);
-      res.status(500).json({ error: "Failed to delete user" });
+      handleDatabaseError(res, err, "Failed to fetch users");
       return;
     }
     if (results.affectedRows === 0) {
@@ -104,8 +120,7 @@ app.delete("/users/:id", (req, res) => {
 app.get("/todos", (req, res) => {
   db.query("SELECT * FROM todos", (err, results) => {
     if (err) {
-      console.error("Error executing the query: ", err);
-      res.status(500).json({ error: "Failed to fetch todos" });
+      handleDatabaseError(res, err, "Failed to fetch users");
       return;
     }
     res.json(results);
@@ -116,8 +131,7 @@ app.get("/todos/:id", (req, res) => {
   const todoId = req.params.id;
   db.query("SELECT * FROM todos WHERE userId = ?", [todoId], (err, results) => {
     if (err) {
-      console.error("Error executing the query: ", err);
-      res.status(500).json({ error: "Failed to fetch todo" });
+      handleDatabaseError(res, err, "Failed to fetch users");
       return;
     }
     if (results.length === 0) {
@@ -136,8 +150,7 @@ app.post("/todos", (req, res) => {
     [title, completed, userId],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to create todo" });
+        handleDatabaseError(res, err, "Failed to fetch users");
         return;
       }
       res.json({
@@ -157,8 +170,7 @@ app.put("/todos/:id", (req, res) => {
     [title, completed, userId, todoId],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to update todo" });
+        handleDatabaseError(res, err, "Failed to fetch users");
         return;
       }
       if (results.affectedRows === 0) {
@@ -175,8 +187,7 @@ app.delete("/todos/:id", (req, res) => {
   const todoId = req.params.id;
   db.query("DELETE FROM todos WHERE id = ?", [todoId], (err, results) => {
     if (err) {
-      console.error("Error executing the query: ", err);
-      res.status(500).json({ error: "Failed to delete todo" });
+      handleDatabaseError(res, err, "Failed to fetch users");
       return;
     }
     if (results.affectedRows === 0) {
@@ -189,11 +200,11 @@ app.delete("/todos/:id", (req, res) => {
 
 //------------------------------POSTS-------------------------------------------
 app.get("/posts", (req, res) => {
+  const userId = req.query.userId; // Use req.query.userId instead of req.params.userId
   console.log("we are here");
-  db.query("SELECT * FROM posts", (err, results) => {
+  db.query("SELECT * FROM posts WHERE userId = ?", [userId], (err, results) => {
     if (err) {
-      console.error("Error executing the query: ", err);
-      res.status(500).json({ error: "Failed to fetch posts" });
+      handleDatabaseError(res, err, "Failed to fetch users");
       return;
     }
     res.json(results);
@@ -202,10 +213,9 @@ app.get("/posts", (req, res) => {
 
 app.get("/posts/:id", (req, res) => {
   const postId = req.params.id;
-  db.query("SELECT * FROM posts WHERE userId = ?", [postId], (err, results) => {
+  db.query("SELECT * FROM posts WHERE postId = ?", [postId], (err, results) => {
     if (err) {
-      console.error("Error executing the query: ", err);
-      res.status(500).json({ error: "Failed to fetch post" });
+      handleDatabaseError(res, err, "Failed to fetch users");
       return;
     }
     if (results.length === 0) {
@@ -224,8 +234,7 @@ app.post("/posts", (req, res) => {
     [title, body, userId],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to create post" });
+        handleDatabaseError(res, err, "Failed to fetch users");
         return;
       }
       res.json({
@@ -245,8 +254,7 @@ app.put("/posts/:id", (req, res) => {
     [title, body, userId, postId],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to update post" });
+        handleDatabaseError(res, err, "Failed to fetch users");
         return;
       }
       if (results.affectedRows === 0) {
@@ -263,8 +271,7 @@ app.delete("/posts/:id", (req, res) => {
   const postId = req.params.id;
   db.query("DELETE FROM posts WHERE id = ?", [postId], (err, results) => {
     if (err) {
-      console.error("Error executing the query: ", err);
-      res.status(500).json({ error: "Failed to delete post" });
+      handleDatabaseError(res, err, "Failed to fetch users");
       return;
     }
     if (results.affectedRows === 0) {
@@ -279,8 +286,7 @@ app.delete("/posts/:id", (req, res) => {
 app.get("/comments", (req, res) => {
   db.query("SELECT * FROM comments", (err, results) => {
     if (err) {
-      console.error("Error executing the query: ", err);
-      res.status(500).json({ error: "Failed to fetch comments" });
+      handleDatabaseError(res, err, "Failed to fetch users");
       return;
     }
     res.json(results);
@@ -294,8 +300,7 @@ app.get("/comments/:pstId", (req, res) => {
     [commentId],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to fetch comment" });
+        handleDatabaseError(res, err, "Failed to fetch users");
         return;
       }
       if (results.length === 0) {
@@ -315,8 +320,7 @@ app.post("/comments", (req, res) => {
     [postId, name, email, body],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to create comment" });
+        handleDatabaseError(res, err, "Failed to fetch users");
         return;
       }
       res.json({
@@ -336,8 +340,7 @@ app.put("/comments/:id", (req, res) => {
     [postId, name, email, body, commentId],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to update comment" });
+        handleDatabaseError(res, err, "Failed to fetch users");
         return;
       }
       if (results.affectedRows === 0) {
@@ -354,8 +357,7 @@ app.delete("/comments/:id", (req, res) => {
   const commentId = req.params.id;
   db.query("DELETE FROM comments WHERE id = ?", [commentId], (err, results) => {
     if (err) {
-      console.error("Error executing the query: ", err);
-      res.status(500).json({ error: "Failed to delete comment" });
+      handleDatabaseError(res, err, "Failed to fetch users");
       return;
     }
     if (results.affectedRows === 0) {
@@ -370,8 +372,7 @@ app.delete("/comments/:id", (req, res) => {
 app.get("/albums", (req, res) => {
   db.query("SELECT * FROM albums", (err, results) => {
     if (err) {
-      console.error("Error executing the query: ", err);
-      res.status(500).json({ error: "Failed to fetch albums" });
+      handleDatabaseError(res, err, "Failed to fetch albums" );
       return;
     }
     else{
@@ -391,8 +392,7 @@ app.get("/albums/:id", (req, res) => {
     [albumId],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to fetch album" });
+        handleDatabaseError(res, err, "Failed to fetch album");
         return;
       }
       if (results.length === 0) {
@@ -412,8 +412,7 @@ app.post("/albums", (req, res) => {
     [title, userId],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to create album" });
+        handleDatabaseError(res, err,"Failed to create album" );
         return;
       }
       res.json({
@@ -433,8 +432,7 @@ app.put("/albums/:id", (req, res) => {
     [title, userId, albumId],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to update album" });
+        handleDatabaseError(res, err,"Failed to update album" );
         return;
       }
       if (results.affectedRows === 0) {
@@ -451,8 +449,7 @@ app.delete("/albums/:id", (req, res) => {
   const albumId = req.params.id;
   db.query("DELETE FROM albums WHERE id = ?", [albumId], (err, results) => {
     if (err) {
-      console.error("Error executing the query: ", err);
-      res.status(500).json({ error: "Failed to delete album" });
+      handleDatabaseError(res, err,"Failed to delete album");
       return;
     }
     if (results.affectedRows === 0) {
@@ -467,8 +464,7 @@ app.delete("/albums/:id", (req, res) => {
 app.get("/photos", (req, res) => {
   db.query("SELECT * FROM photos", (err, results) => {
     if (err) {
-      console.error("Error executing the query: ", err);
-      res.status(500).json({ error: "Failed to fetch photos" });
+      handleDatabaseError(res, err,"Failed to fetch photos" );
       return;
     }
     res.json(results);
@@ -482,8 +478,7 @@ app.get("/photos/:id", (req, res) => {
     [photoId],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to fetch photo" });
+        handleDatabaseError(res, err,"Failed to fetch photo" );
         return;
       }
       if (results.length === 0) {
@@ -503,8 +498,7 @@ app.post("/photos", (req, res) => {
     [title, url, thumbnailUrl, albumId],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to create photo" });
+        handleDatabaseError(res, err,"Failed to create photo" );
         return;
       }
       res.json({
@@ -524,8 +518,7 @@ app.put("/photos/:id", (req, res) => {
     [title, url, thumbnailUrl, albumId, photoId],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to update photo" });
+        handleDatabaseError(res, err,"Failed to update photo" );
         return;
       }
       if (results.affectedRows === 0) {
@@ -542,8 +535,7 @@ app.delete("/photos/:id", (req, res) => {
   const photoId = req.params.id;
   db.query("DELETE FROM photos WHERE id = ?", [photoId], (err, results) => {
     if (err) {
-      console.error("Error executing the query: ", err);
-      res.status(500).json({ error: "Failed to delete photo" });
+      handleDatabaseError(res, err,"Failed to delete photo" );
       return;
     }
     if (results.affectedRows === 0) {
@@ -580,8 +572,7 @@ app.get('/users_passwords:username', (req, res) => {
 app.get("/users_passwords", (req, res) => {
   db.query("SELECT * FROM users_passwords", (err, results) => {
     if (err) {
-      console.error("Error executing the query: ", err);
-      res.status(500).json({ error: "Failed to fetch users_passwords" });
+      handleDatabaseError(res, err,"Failed to fetch users_passwords" );
       return;
     }
     res.json(results);
@@ -615,8 +606,7 @@ app.post("/users_passwords", (req, res) => {
     [username, password],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to create user" });
+        handleDatabaseError(res, err, "Failed to create user");
         return;
       }
       res.json({
@@ -636,8 +626,7 @@ app.put("/users_passwords/:id", (req, res) => {
     [username, password, userId],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to update user" });
+        handleDatabaseError(res, err, "Failed to update user");
         return;
       }
       if (results.affectedRows === 0) {
@@ -657,8 +646,7 @@ app.delete("/users_passwords/:id", (req, res) => {
     [userId],
     (err, results) => {
       if (err) {
-        console.error("Error executing the query: ", err);
-        res.status(500).json({ error: "Failed to delete user" });
+        handleDatabaseError(res, err, "Failed to delete user");
         return;
       }
       if (results.affectedRows === 0) {

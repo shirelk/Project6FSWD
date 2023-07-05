@@ -12,7 +12,7 @@ function Login() {
       `http://localhost:3000/users_passwords/${username}`
     ).then((response) => response.json());
     if (user) {
-      console.log(user);
+    console.log(user);
       // check if password matches
       if (user.password === password) {
         // get user info from users table
@@ -24,7 +24,8 @@ function Login() {
         localStorage.setItem("ourUser", JSON.stringify(ourUser));
 
         // redirect to /Logged
-        window.location.href = "/Logged";
+        // window.location.href = "/Logged";
+        window.location.href = `/users/${username}`;
       } else {
         setError("Incorrect password");
       }
@@ -36,7 +37,8 @@ function Login() {
       console.log("successful login");
       localStorage.removeItem("ourUser");
       localStorage.setItem("ourUser", JSON.stringify(user));
-      document.location.href = "/logged";
+      //document.location.href = "/logged";
+      document.location.href = `/users/${username}`;
     } else {
       setError("Incorrect password.");
     }

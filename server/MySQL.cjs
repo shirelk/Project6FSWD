@@ -1,10 +1,11 @@
 var mysql = require("mysql2");
-const secret = require("./password.txt");
+const secret = require("../server/password.json");
+console.log(secret);
 
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: secret,
+  password: secret.password,
   database: "jsonplaceholder",
   port: "3306",
 });

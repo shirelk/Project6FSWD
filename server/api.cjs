@@ -129,7 +129,7 @@ app.get("/todos", (req, res) => {
 
 app.get("/todos/:id", (req, res) => {
   const todoId = req.params.id;
-  db.query("SELECT * FROM todos WHERE id = ?", [todoId], (err, results) => {
+  db.query("SELECT * FROM todos WHERE userId = ?", [todoId], (err, results) => {
     if (err) {
       handleDatabaseError(res, err, "Failed to fetch users");
       return;

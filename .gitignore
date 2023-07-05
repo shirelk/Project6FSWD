@@ -13,7 +13,7 @@ dist-ssr
 *.local
 
 # password file
-password.txt
+password.json
 
 # Editor directories and files
 .vscode/*

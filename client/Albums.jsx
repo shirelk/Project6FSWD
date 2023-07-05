@@ -10,23 +10,25 @@ function Albums() {
 
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("ourUser"));
-    fetch(`http://localhost:3000/albums`)
+    fetch(`http://localhost:3000/albums/?userId=${user.id}`)
       .then((response) => response.json())
       .then((json) => {
         const userAlbums = json.filter((album) => album.userId === user.id);
         setAlbums(userAlbums);
+        localStorage.setItem("albums", JSON.stringify(userAlbums));
       });
   }, []);
 
   useEffect(() => {
     if (selectedAlbum) {
-      fetch(`http://localhost:3000/photos`)
+      fetch(fetch(`http://localhost:3000/photos/?albumId=${selectedAlbum.id}`))
         .then((response) => response.json())
         .then((json) => {
           const albumPhotos = json.filter(
             (phtos) => phtos.albumId === selectedAlbum.id
           );
           setPhotos(albumPhotos);
+          localStorage.setItem("photos", JSON.stringify(albumPhotos));
           setDisplayedPhotos(albumPhotos.slice(start, start + limit));
         });
     }

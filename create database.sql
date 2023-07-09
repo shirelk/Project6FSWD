@@ -496,3 +496,27 @@ VALUES
 (10, 'odio iure consequatur molestiae quibusdam necessitatibus quia sint', 'https://via.placeholder.com/600/6ad437', 'https://via.placeholder.com/150/6ad437'),
 (10, 'facilis modi saepe mollitia', 'https://via.placeholder.com/600/91b8ede', 'https://via.placeholder.com/150/91b8ede'),
 (10, 'vel nihil et molestiae iusto assumenda nemo quo ut', 'https://via.placeholder.com/600/0fd8fe', 'https://via.placeholder.com/150/0fd8fe');
+
+
+CREATE TABLE users_passwords (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    last_pw BOOLEAN,
+    FOREIGN KEY (userId) REFERENCES users(id)
+);
+
+INSERT INTO users_passwords (userId, username, password, last_pw)
+VALUES
+(1, 'Bret',3159, true),
+(2, 'Antonette', 9509, true),
+(3, 'Samantha', 6102, true),
+(4, 'Karianne', 4572, true),
+(5, 'Kamren', 8129, true),
+(6, 'Leopoldo_Corkery', 4197, true),
+(7, 'Elwyn.Skiles', 8918, true),
+(8, 'Maxime_Nienow',3990, true),
+(9, 'Delphine', 6463, true),
+(10, 'Moriah.Stanton', 2386, true);
+

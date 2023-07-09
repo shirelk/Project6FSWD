@@ -18,10 +18,11 @@ function Posts() {
   function postPressed(pst) {
     setSelectedPost(pst); //update selected post
     //show all comments related to the clicked post
-    fetch(`http://localhost:3000/comments/?id=${pst.id}`)
+    fetch(`http://localhost:3000/comments/?pstId=${pst.id}`)
       .then((response) => response.json())
       .then((data) => {
-        setComments(data);
+        const comme = data.filter((cmnts) => cmnts.postId === pst.id); //filter comments by postId
+        setComments(comme);
         const targetButton = document.getElementById("clickedBtn");
         if (targetButton) {
           const { top } = targetButton.getBoundingClientRect();

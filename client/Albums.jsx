@@ -19,20 +19,10 @@ function Albums() {
       });
   }, []);
 
-  useEffect(() => {
-    if (selectedAlbum) {
-      fetch(fetch(`http://localhost:3000/photos/?albumId=${selectedAlbum.id}`))
-        .then((response) => response.json())
-        .then((json) => {
-          const albumPhotos = json.filter(
-            (phtos) => phtos.albumId === selectedAlbum.id
-          );
-          setPhotos(albumPhotos);
-          localStorage.setItem("photos", JSON.stringify(albumPhotos));
-          setDisplayedPhotos(albumPhotos.slice(start, start + limit));
-        });
-    }
-  }, [selectedAlbum]);
+  // useEffect(() => {
+  //   if (selectedAlbum) {
+  //   }
+  // }, [selectedAlbum]);
 
   function loadMorePhotos() {
     setStart(start + limit);
@@ -49,6 +39,16 @@ function Albums() {
 
   function albumPressed(albm) {
     setselectedAlbum(albm);
+    fetch(`http://localhost:3000/photos/?albumId=${albm.id}`)
+      .then((response) => response.json())
+      .then((json) => {
+        const albumPhotos = json.filter(
+          (phtos) => phtos.albumId === albm.id
+        );
+        setPhotos(albumPhotos);
+        localStorage.setItem("photos", JSON.stringify(albumPhotos));
+        setDisplayedPhotos(albumPhotos.slice(start, start + limit));
+      });
   }
 
   function showPhotos(albm) {
@@ -56,6 +56,7 @@ function Albums() {
       return (
         <>
           <ul className="photosUl">
+            {console.log(displayedPhotos)}
             {displayedPhotos.map((phtos) => (
               <li key={phtos.id}>
                 <div>

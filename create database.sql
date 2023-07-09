@@ -432,255 +432,67 @@ VALUES
 (1, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
 (1, 'ullam ut quidem id aut vel consequuntur', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
 (1, 'doloribus ad provident suscipit at', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(1, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
-INSERT INTO photos (albumId, title, url, thumbnailUrl)
-VALUES
+(1, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97'),
+
 -- Album ID 2
-(2, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(2, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(2, 'ullam ut quidem id aut vel consequuntur', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(2, 'doloribus ad provident suscipit at', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(2, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97'),
+(2, 'et fugit eligendi deleniti quidem qui sint nihil autem', 'https://via.placeholder.com/600/56a8c2', 'https://via.placeholder.com/150/56a8c2'),
+(2, 'repellendus sunt dolores architecto voluptatum', 'https://via.placeholder.com/600/b0f7cc', 'https://via.placeholder.com/150/b0f7cc'),
+(2, 'et omnis dolorem', 'https://via.placeholder.com/600/54176f', 'https://via.placeholder.com/150/54176f'),
+(2, 'provident id voluptas', 'https://via.placeholder.com/600/51aa97', 'https://via.placeholder.com/150/51aa97'),
+(2, 'eaque et deleniti atque tenetur ut quo ut', 'https://via.placeholder.com/600/810b14', 'https://via.placeholder.com/150/810b14'),
 
 -- Album ID 3
-(3, 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(3, 'qui est esse', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(3, 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(3, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(3, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
+(3, 'fugit labore quia mollitia quas deserunt nostrum sunt', 'https://via.placeholder.com/600/1ee8a4', 'https://via.placeholder.com/150/1ee8a4'),
+(3, 'modi ut eos dolores illum nam dolor', 'https://via.placeholder.com/600/66b7d2', 'https://via.placeholder.com/150/66b7d2'),
+(3, 'aut inventore non pariatur sit vitae voluptatem sapiente', 'https://via.placeholder.com/600/197d29', 'https://via.placeholder.com/150/197d29'),
+(3, 'et officiis id praesentium hic aut ipsa dolorem repudiandae', 'https://via.placeholder.com/600/61a65', 'https://via.placeholder.com/150/61a65'),
+(3, 'debitis magnam hic odit aut ullam nostrum tenetur', 'https://via.placeholder.com/600/f9cee5', 'https://via.placeholder.com/150/f9cee5'),
 
-INSERT INTO photos (albumId, title, url, thumbnailUrl)
-VALUES
 -- Album ID 4
-(4, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(4, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(4, 'ullam ut quidem id aut vel consequuntur', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(4, 'doloribus ad provident suscipit at', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(4, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97'),
+(4, 'debitis magnam hic odit aut ullam nostrum tenetur', 'https://via.placeholder.com/600/fdf73e', 'https://via.placeholder.com/150/fdf73e'),
+(4, 'ut numquam possimus omnis eius suscipit laudantium iure', 'https://via.placeholder.com/600/9c184f', 'https://via.placeholder.com/150/9c184f'),
+(4, 'aut quo modi neque nostrum ducimus', 'https://via.placeholder.com/600/1fe46f', 'https://via.placeholder.com/150/1fe46f'),
+(4, 'quibusdam cumque rem aut deserunt', 'https://via.placeholder.com/600/56acb2', 'https://via.placeholder.com/150/56acb2'),
+(4, 'laudantium quibusdam inventore', 'https://via.placeholder.com/600/8985dc', 'https://via.placeholder.com/150/8985dc'),
 
 -- Album ID 5
-(5, 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(5, 'qui est esse', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(5, 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(5, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(5, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
+(5, 'hic inventore sint aut', 'https://via.placeholder.com/600/5e12c6', 'https://via.placeholder.com/150/5e12c6'),
+(5, 'enim asperiores illum', 'https://via.placeholder.com/600/45601a', 'https://via.placeholder.com/150/45601a'),
+(5, 'et dolor error doloremque', 'https://via.placeholder.com/600/e924e6', 'https://via.placeholder.com/150/e924e6'),
+(5, 'ad cupiditate labore', 'https://via.placeholder.com/600/8f209a', 'https://via.placeholder.com/150/8f209a'),
+(5, 'minus laboriosam consequuntur', 'https://via.placeholder.com/600/5e3a73', 'https://via.placeholder.com/150/5e3a73'),
 
-INSERT INTO photos (albumId, title, url, thumbnailUrl)
-VALUES
 -- Album ID 6
-(6, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(6, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(6, 'ullam ut quidem id aut vel consequuntur', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(6, 'doloribus ad provident suscipit at', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(6, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97'),
+(6, 'minus laboriosam consequuntur', 'https://via.placeholder.com/600/474645', 'https://via.placeholder.com/150/474645'),
+(6, 'quo dolore nihil quia', 'https://via.placeholder.com/600/6826ae', 'https://via.placeholder.com/150/6826ae'),
+(6, 'est pariatur similique quod voluptas et consequuntur nam molestiae', 'https://via.placeholder.com/600/150bae', 'https://via.placeholder.com/150/150bae'),
+(6, 'exercitationem doloribus at', 'https://via.placeholder.com/600/4f0aec', 'https://via.placeholder.com/150/4f0aec'),
+(6, 'non quia odio', 'https://via.placeholder.com/600/cdfc1d', 'https://via.placeholder.com/150/cdfc1d'),
 
 -- Album ID 7
-(7, 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(7, 'qui est esse', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(7, 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(7, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(7, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
+(7, 'non quia odio', 'https://via.placeholder.com/600/250289', 'https://via.placeholder.com/150/250289'),
+(7, 'aut quia et corporis voluptas quisquam voluptatem', 'https://via.placeholder.com/600/2bcbba', 'https://via.placeholder.com/150/2bcbba'),
+(7, 'et eum provident maxime beatae minus et doloremque perspiciatis', 'https://via.placeholder.com/600/aa8f2e', 'https://via.placeholder.com/150/aa8f2e'),
+(7, 'eos dolorem iste accusantium est eaque quam', 'https://via.placeholder.com/600/df462e', 'https://via.placeholder.com/150/df462e'),
+(7, 'accusantium qui sequi', 'https://via.placeholder.com/600/6552e5', 'https://via.placeholder.com/150/6552e5'),
 
-INSERT INTO photos (albumId, title, url, thumbnailUrl)
-VALUES
 -- Album ID 8
-(8, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(8, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(8, 'ullam ut quidem id aut vel consequuntur', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(8, 'doloribus ad provident suscipit at', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(8, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97'),
+(8, 'accusantium qui sequi', 'https://via.placeholder.com/600/e65efe', 'https://via.placeholder.com/150/e65efe'),
+(8, 'illum et alias quidem magni voluptatum quae', 'https://via.placeholder.com/600/f66f71', 'https://via.placeholder.com/150/f66f71'),
+(8, 'sint enim earum', 'https://via.placeholder.com/600/7e1e85', 'https://via.placeholder.com/150/7e1e85'),
+(8, 'beatae incidunt sequi qui', 'https://via.placeholder.com/600/7b227b', 'https://via.placeholder.com/150/7b227b'),
+(8, 'molestiae magnam et rerum', 'https://via.placeholder.com/600/9fb4f9', 'https://via.placeholder.com/150/9fb4f9'),
 
 -- Album ID 9
-(9, 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(9, 'qui est esse', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(9, 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(9, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(9, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
+(9, 'molestiae magnam et rerum', 'https://via.placeholder.com/600/9c8661', 'https://via.placeholder.com/150/9c8661'),
+(9, 'esse rem ut neque magni voluptatem id qui', 'https://via.placeholder.com/600/559a3e', 'https://via.placeholder.com/150/559a3e'),
+(9, 'sequi ut omnis et', 'https://via.placeholder.com/600/7684e8', 'https://via.placeholder.com/150/7684e8'),
+(9, 'molestiae nisi accusantium tenetur dolorem et', 'https://via.placeholder.com/600/8bcbc1', 'https://via.placeholder.com/150/8bcbc1'),
+(9, 'nulla quis consequatur saepe qui id expedita', 'https://via.placeholder.com/600/9c8f4b', 'https://via.placeholder.com/150/9c8f4b'),
 
-INSERT INTO photos (albumId, title, url, thumbnailUrl)
-VALUES
 -- Album ID 10
-(10, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(10, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(10, 'ullam ut quidem id aut vel consequuntur', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(10, 'doloribus ad provident suscipit at', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(10, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97'),
-
--- Album ID 11
-(11, 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(11, 'qui est esse', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(11, 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(11, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(11, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
-
-INSERT INTO photos (albumId, title, url, thumbnailUrl)
-VALUES
--- Album ID 12
-(12, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(12, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(12, 'ullam ut quidem id aut vel consequuntur', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(12, 'doloribus ad provident suscipit at', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(12, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97'),
-
--- Album ID 13
-(13, 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(13, 'qui est esse', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(13, 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(13, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(13, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
-
-INSERT INTO photos (albumId, title, url, thumbnailUrl)
-VALUES
--- Album ID 14
-(14, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(14, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(14, 'ullam ut quidem id aut vel consequuntur', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(14, 'doloribus ad provident suscipit at', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(14, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97'),
-
--- Album ID 15
-(15, 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(15, 'qui est esse', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(15, 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(15, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(15, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97'),
-
--- Album ID 16
-(16, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(16, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(16, 'ullam ut quidem id aut vel consequuntur', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(16, 'doloribus ad provident suscipit at', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(16, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97'),
-
--- Album ID 17
-(17, 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(17, 'qui est esse', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(17, 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(17, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(17, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
-
-INSERT INTO photos (albumId, title, url, thumbnailUrl)
-VALUES
--- Album ID 18
-(18, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(18, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(18, 'ullam ut quidem id aut vel consequuntur', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(18, 'doloribus ad provident suscipit at', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(18, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97'),
-
--- Album ID 19
-(19, 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(19, 'qui est esse', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(19, 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(19, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(19, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97'),
-
--- Album ID 20
-(20, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(20, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(20, 'ullam ut quidem id aut vel consequuntur', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(20, 'doloribus ad provident suscipit at', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(20, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97'),
-
--- Album ID 21
-(21, 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(21, 'qui est esse', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(21, 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(21, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(21, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97'),
-
--- Album ID 22
-(22, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(22, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(22, 'ullam ut quidem id aut vel consequuntur', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(22, 'doloribus ad provident suscipit at', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(22, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97'),
-
--- Album ID 23
-(23, 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(23, 'qui est esse', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(23, 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(23, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(23, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97'),
-
--- Album ID 24
-(24, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(24, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(24, 'ullam ut quidem id aut vel consequuntur', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(24, 'doloribus ad provident suscipit at', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(24, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97'),
-
--- Album ID 25
-(25, 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(25, 'qui est esse', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(25, 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(25, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(25, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
-
--- Album ID 26
-INSERT INTO photos (albumId, title, url, thumbnailUrl)
-VALUES
-(26, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(26, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(26, 'ullam ut quidem id aut vel consequuntur', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(26, 'doloribus ad provident suscipit at', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(26, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
-
--- Album ID 27
-INSERT INTO photos (albumId, title, url, thumbnailUrl)
-VALUES
-(27, 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(27, 'qui est esse', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(27, 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(27, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(27, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
-
--- Album ID 28
-INSERT INTO photos (albumId, title, url, thumbnailUrl)
-VALUES
-(28, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(28, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(28, 'ullam ut quidem id aut vel consequuntur', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(28, 'doloribus ad provident suscipit at', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(28, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
-
--- Album ID 29
-INSERT INTO photos (albumId, title, url, thumbnailUrl)
-VALUES
-(29, 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(29, 'qui est esse', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(29, 'ea molestias quasi exercitationem repellat qui ipsa sit aut', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(29, 'eum et est occaecati', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(29, 'nesciunt quas odio', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
-
--- Album ID 30
-INSERT INTO photos (albumId, title, url, thumbnailUrl)
-VALUES
-(30, 'accusamus beatae ad facilis cum similique qui sunt', 'https://via.placeholder.com/600/92c952', 'https://via.placeholder.com/150/92c952'),
-(30, 'repellat consequatur praesentium vel minus molestias voluptatum', 'https://via.placeholder.com/600/771796', 'https://via.placeholder.com/150/771796'),
-(30, 'ullam ut quidem id aut vel consequuntur', 'https://via.placeholder.com/600/24f355', 'https://via.placeholder.com/150/24f355'),
-(30, 'doloribus ad provident suscipit at', 'https://via.placeholder.com/600/d32776', 'https://via.placeholder.com/150/d32776'),
-(30, 'asperiores ea ipsam voluptatibus modi minima quia sint', 'https://via.placeholder.com/600/f66b97', 'https://via.placeholder.com/150/f66b97');
-
-CREATE TABLE users_passwords (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    userId INT,
-    username VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    last_pw BOOLEAN,
-    FOREIGN KEY (userId) REFERENCES users(id)
-);
-
-INSERT INTO users_passwords (userId, username, password, last_pw)
-VALUES
-(1, 'Bret',3159, true),
-(2, 'Antonette', 9509, true),
-(3, 'Samantha', 6102, true),
-(4, 'Karianne', 4572, true),
-(5, 'Kamren', 8129, true),
-(6, 'Leopoldo_Corkery', 4197, true),
-(7, 'Elwyn.Skiles', 8918, true),
-(8, 'Maxime_Nienow',3990, true),
-(9, 'Delphine', 6463, true),
-(10, 'Moriah.Stanton', 2386, true);
-
+(10, 'nulla quis consequatur saepe qui id expedita', 'https://via.placeholder.com/600/5e27e9', 'https://via.placeholder.com/150/5e27e9'),
+(10, 'in omnis laboriosam', 'https://via.placeholder.com/600/6fcd28', 'https://via.placeholder.com/150/6fcd28'),
+(10, 'odio iure consequatur molestiae quibusdam necessitatibus quia sint', 'https://via.placeholder.com/600/6ad437', 'https://via.placeholder.com/150/6ad437'),
+(10, 'facilis modi saepe mollitia', 'https://via.placeholder.com/600/91b8ede', 'https://via.placeholder.com/150/91b8ede'),
+(10, 'vel nihil et molestiae iusto assumenda nemo quo ut', 'https://via.placeholder.com/600/0fd8fe', 'https://via.placeholder.com/150/0fd8fe');

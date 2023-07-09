@@ -201,7 +201,7 @@ app.delete("/todos/:id", (req, res) => {
 //------------------------------POSTS-------------------------------------------
 app.get("/posts", (req, res) => {
   const userId = req.query.userId; // Use req.query.userId instead of req.params.userId
-  console.log("we are here");
+  console.log("we are in posts");
   db.query("SELECT * FROM posts WHERE userId = ?", [userId], (err, results) => {
     if (err) {
       handleDatabaseError(res, err, "Failed to fetch users");
@@ -212,6 +212,7 @@ app.get("/posts", (req, res) => {
 });
 
 app.get("/posts/:id", (req, res) => {
+  console.log("we are in posts:id");
   const postId = req.params.id;
   db.query("SELECT * FROM posts WHERE postId = ?", [postId], (err, results) => {
     if (err) {
@@ -289,12 +290,13 @@ app.get("/comments", (req, res) => {
       handleDatabaseError(res, err, "Failed to fetch users");
       return;
     }
+    console.log(results);
     res.json(results);
   });
 });
 
-app.get("/comments/:pstId", (req, res) => {
-  const commentId = req.params.pstId;
+app.get("/comments/:id", (req, res) => {
+  const commentId = req.params.id;
   db.query(
     "SELECT * FROM comments WHERE postId = ?",
     [commentId],
@@ -372,13 +374,12 @@ app.delete("/comments/:id", (req, res) => {
 app.get("/albums", (req, res) => {
   db.query("SELECT * FROM albums", (err, results) => {
     if (err) {
-      handleDatabaseError(res, err, "Failed to fetch albums" );
+      handleDatabaseError(res, err, "Failed to fetch albums");
       return;
-    }
-    else{
+    } else {
       if (results.length === 0) {
-      res.status(404).json({ error: "Album not found" });
-      return;
+        res.status(404).json({ error: "Album not found" });
+        return;
       }
     }
     res.json(results);
@@ -412,7 +413,7 @@ app.post("/albums", (req, res) => {
     [title, userId],
     (err, results) => {
       if (err) {
-        handleDatabaseError(res, err,"Failed to create album" );
+        handleDatabaseError(res, err, "Failed to create album");
         return;
       }
       res.json({
@@ -432,7 +433,7 @@ app.put("/albums/:id", (req, res) => {
     [title, userId, albumId],
     (err, results) => {
       if (err) {
-        handleDatabaseError(res, err,"Failed to update album" );
+        handleDatabaseError(res, err, "Failed to update album");
         return;
       }
       if (results.affectedRows === 0) {
@@ -449,7 +450,7 @@ app.delete("/albums/:id", (req, res) => {
   const albumId = req.params.id;
   db.query("DELETE FROM albums WHERE id = ?", [albumId], (err, results) => {
     if (err) {
-      handleDatabaseError(res, err,"Failed to delete album");
+      handleDatabaseError(res, err, "Failed to delete album");
       return;
     }
     if (results.affectedRows === 0) {
@@ -464,7 +465,7 @@ app.delete("/albums/:id", (req, res) => {
 app.get("/photos", (req, res) => {
   db.query("SELECT * FROM photos", (err, results) => {
     if (err) {
-      handleDatabaseError(res, err,"Failed to fetch photos" );
+      handleDatabaseError(res, err, "Failed to fetch photos");
       return;
     }
     res.json(results);
@@ -478,7 +479,7 @@ app.get("/photos/:id", (req, res) => {
     [photoId],
     (err, results) => {
       if (err) {
-        handleDatabaseError(res, err,"Failed to fetch photo" );
+        handleDatabaseError(res, err, "Failed to fetch photo");
         return;
       }
       if (results.length === 0) {
@@ -498,7 +499,7 @@ app.post("/photos", (req, res) => {
     [title, url, thumbnailUrl, albumId],
     (err, results) => {
       if (err) {
-        handleDatabaseError(res, err,"Failed to create photo" );
+        handleDatabaseError(res, err, "Failed to create photo");
         return;
       }
       res.json({
@@ -518,7 +519,7 @@ app.put("/photos/:id", (req, res) => {
     [title, url, thumbnailUrl, albumId, photoId],
     (err, results) => {
       if (err) {
-        handleDatabaseError(res, err,"Failed to update photo" );
+        handleDatabaseError(res, err, "Failed to update photo");
         return;
       }
       if (results.affectedRows === 0) {
@@ -535,7 +536,7 @@ app.delete("/photos/:id", (req, res) => {
   const photoId = req.params.id;
   db.query("DELETE FROM photos WHERE id = ?", [photoId], (err, results) => {
     if (err) {
-      handleDatabaseError(res, err,"Failed to delete photo" );
+      handleDatabaseError(res, err, "Failed to delete photo");
       return;
     }
     if (results.affectedRows === 0) {
@@ -556,23 +557,21 @@ const authenticateUser = (req, res, next) => {
     return next();
   } else {
     // User is not authenticated, redirect to login page
-    res.redirect('/login');
+    res.redirect("/login");
   }
 };
 
 // Route to password table
-app.get('/users_passwords:username', (req, res) => {
+app.get("/users_passwords:username", (req, res) => {
   // User is authenticated, send the response
   authenticateUser(req, res);
-  res.json({ message: 'You are authenticated to access this route' });
+  res.json({ message: "You are authenticated to access this route" });
 });
-
-
 
 app.get("/users_passwords", (req, res) => {
   db.query("SELECT * FROM users_passwords", (err, results) => {
     if (err) {
-      handleDatabaseError(res, err,"Failed to fetch users_passwords" );
+      handleDatabaseError(res, err, "Failed to fetch users_passwords");
       return;
     }
     res.json(results);

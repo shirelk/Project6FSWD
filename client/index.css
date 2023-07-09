@@ -70,6 +70,7 @@ button:focus-visible {
     background-color: #f9f9f9;
     border-color: #838073;
     border-width: 1.5px;
+    margin: 0.2em;
   }
 }
 
@@ -86,4 +87,39 @@ input[type="checkbox"] {
 .mainBtn {
   border-color: #838073;
   border-width: 1.5px;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0;
+}
+
+.infoDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  width: 80%;
+  max-width: 500px;
+  padding: 0 1.5em;
+}
+
+.crudDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: right;
+  margin: 3 auto;
+  width: 35%;
+  max-width: 500px;
+  padding: 0;
+}
+
+.crudBtn {
+  width: 100%;
+  max-width: 500px;
 }

@@ -50,10 +50,12 @@ function Info() {
             change password
           </button>
           <Popup trigger={buttonChangePassword} setTrigger={setButtonChangePassword}>
+            <div className="popup-div">
             {console.log("change password popup")}
             <h3>change password</h3>
             <h5>enter new password:</h5>
             <input type="text" placeholder="new password"></input>
+            </div>
           </Popup>
           <button className="crudBtn mainBtn">edit info</button>
           <button className="crudBtn mainBtn">delete user</button>

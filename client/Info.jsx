@@ -1,5 +1,11 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Popup from "./Popup";
 function Info() {
+  const [buttonChangePassword, setButtonChangePassword] = useState(false);
+  const [buttonEditInfo, setButtonEditInfo] = useState(false);
+  const [buttonDeleteUser, setButtonDeleteUser] = useState(false);
+
   function getInfo() {
     let user = JSON.parse(localStorage.getItem("ourUser"));
     return (
@@ -37,7 +43,18 @@ function Info() {
           </p>
         </div>
         <div className="crudDiv">
-          <button className="crudBtn mainBtn">change password</button>
+          <button
+            className="crudBtn mainBtn"
+            onClick={() => setButtonChangePassword(true)}
+          >
+            change password
+          </button>
+          <Popup trigger={buttonChangePassword} setTrigger={setButtonChangePassword}>
+            {console.log("change password popup")}
+            <h3>change password</h3>
+            <h5>enter new password:</h5>
+            <input type="text" placeholder="new password"></input>
+          </Popup>
           <button className="crudBtn mainBtn">edit info</button>
           <button className="crudBtn mainBtn">delete user</button>
         </div>

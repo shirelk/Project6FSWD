@@ -5,9 +5,24 @@ function Info() {
   const [buttonChangePassword, setButtonChangePassword] = useState(false);
   const [buttonEditInfo, setButtonEditInfo] = useState(false);
   const [buttonDeleteUser, setButtonDeleteUser] = useState(false);
+  let user = JSON.parse(localStorage.getItem("ourUser"));
+
+  async function saveNewPass() {
+    let newPass = document.getElementById("newPass");
+    {/* save new password in database */}
+    await fetch(`http://localhost:3000/users_passwords/${user.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: user.username,
+        password: newPass.value,
+      }),
+    });
+  }
 
   function getInfo() {
-    let user = JSON.parse(localStorage.getItem("ourUser"));
     return (
       <div className="infoContainer">
         <div className="infoDiv">
@@ -52,12 +67,17 @@ function Info() {
           <Popup
             trigger={buttonChangePassword}
             setTrigger={setButtonChangePassword}
+            setSave={saveNewPass}
           >
             <div className="popup-div">
               {console.log("change password popup")}
               <h3>change password</h3>
               <h5>enter new password:</h5>
-              <input type="text" placeholder="new password"></input>
+              <input
+                id="newPass"
+                type="text"
+                placeholder="new password"
+              ></input>
             </div>
           </Popup>
           <button
@@ -71,22 +91,63 @@ function Info() {
               {console.log("edit info popup")}
               <h3>Edit info</h3>
               {/* לעשות שיופיע בפלייסהולדר את הנתונים שיש עכשיו? */}
-              <input type="text" placeholder="Username"></input>
-              <input type="email" placeholder="Email"></input>
-              <input type="text" placeholder="Address"></input>
-              <input type="text" placeholder="Street"></input>
-              <input type="text" placeholder="Suit"></input>
-              <input type="text" placeholder="City"></input>
-              <input type="text" placeholder="Zip code"></input>
-              <input type="text" placeholder="Geo"></input>
-              <input type="text" placeholder="Latitude"></input>
-              <input type="text" placeholder="Longitude"></input>
-              <input type="text" placeholder="Phone"></input>
-              <input type="text" placeholder="Website"></input>
-              <input type="text" placeholder="Company"></input>
-              <input type="text" placeholder="Name"></input>
-              <input type="text" placeholder="catchPhrase"></input>
-              <input type="text" placeholder="bs"></input>
+              {console.log(user.username)}
+              <input
+                type="text"
+                placeholder={user.username ? user.username : "username"}
+              ></input>
+              <input
+                type="email"
+                placeholder={user.email ? user.email : "email"}
+              ></input>
+              <input
+                type="text"
+                placeholder={user.name ? user.name : "name"}
+              ></input>
+              <input
+                type="text"
+                placeholder={user.street ? user.street : "street"}
+              ></input>
+              <input
+                type="text"
+                placeholder={user.suite ? user.suite : "suite"}
+              ></input>
+              <input
+                type="text"
+                placeholder={user.city ? user.city : "city"}
+              ></input>
+              <input
+                type="text"
+                placeholder={user.zipcode ? user.zipcode : "zipcode"}
+              ></input>
+              <input
+                type="text"
+                placeholder={user.lat ? user.lat : "lat"}
+              ></input>
+              <input
+                type="text"
+                placeholder={user.lng ? user.lng : "lng"}
+              ></input>
+              <input
+                type="text"
+                placeholder={user.phone ? user.phone : "phone"}
+              ></input>
+              <input
+                type="text"
+                placeholder={user.website ? user.website : "website"}
+              ></input>
+              <input
+                type="text"
+                placeholder={
+                  user.companyName ? user.companyName : "companyName"
+                }
+              ></input>
+              <input
+                type="text"
+                placeholder={
+                  user.catchPhrase ? user.catchPhrase : "catchPhrase"
+                }
+              ></input>
             </div>
           </Popup>
           <button

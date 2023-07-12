@@ -169,3 +169,17 @@ input[type="checkbox"] {
   bottom: 3vh;
   width: 100px;
 }
+
+.password-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 1rem;
+  position: relative;
+  outline: none; /* Remove the outline when the button is focused */
+}
+
+.password-toggle:focus-visible {
+  outline: none; /* Remove the outline for the password-toggle button */
+}

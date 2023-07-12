@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
 // const myApi = require("./api.cjs");
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
     // extract username and password from user_passwords table
@@ -12,7 +16,7 @@ function Login() {
       `http://localhost:3000/users_passwords/${username}`
     ).then((response) => response.json());
     if (user) {
-    console.log(user);
+      console.log(user);
       // check if password matches
       if (user.password === password) {
         // get user info from users table
@@ -44,6 +48,16 @@ function Login() {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleLogin();
+    }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="background1">
       <form>
@@ -56,11 +70,21 @@ function Login() {
         ></input>
         <h2>Please enter your password:</h2>
         {/* <h4>password: 3159</h4> */}
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        ></input>
+        <div className="password-input">
+          <input
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={handleKeyDown}
+          ></input>
+          <button
+            type="button"
+            className="password-toggle"
+            onClick={togglePasswordVisibility}
+          >
+            <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+          </button>
+        </div>
         <button type="button" onClick={handleLogin}>
           Log in
         </button>

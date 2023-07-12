@@ -21,12 +21,12 @@ CREATE TABLE users (
     zipcode VARCHAR(10),
     lat DECIMAL(9,6),
     lng DECIMAL(9,6),
-    company_name VARCHAR(255),
-    catch_phrase VARCHAR(255),
+    companyName VARCHAR(255),
+    catchPhrase VARCHAR(255),
     bs VARCHAR(255)
 );
 
-INSERT INTO users (id, name, username, email, phone, website, street, suite, city, zipcode, lat, lng, company_name, catch_phrase, bs)
+INSERT INTO users (id, name, username, email, phone, website, street, suite, city, zipcode, lat, lng, companyName, catchPhrase, bs)
 VALUES
 (1, 'Leanne Graham', 'Bret', 'Sincere@april.biz', '1-770-736-8031 x56442', 'hildegard.org', 'Kulas Light', 'Apt. 556', 'Gwenborough', '92998-3874', -37.3159, 81.1496, 'Romaguera-Crona', 'Multi-layered client-server neural-net', 'harness real-time e-markets'),
 (2, 'Ervin Howell', 'Antonette', 'Shanna@melissa.tv', '010-692-6593 x09125', 'anastasia.net', 'Victor Plains', 'Suite 879', 'Wisokyburgh', '90566-7771', -43.9509, -34.4618, 'Deckow-Crist', 'Proactive didactic contingency', 'synergize scalable supply-chains'),

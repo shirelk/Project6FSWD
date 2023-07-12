@@ -45,7 +45,8 @@ function Register() {
         ).then((response) => response.json());
         localStorage.setItem("ourUser", JSON.stringify(ourUser));
         // redirect to /logged
-        window.location.href = "/logged";
+        // window.location.href = "/logged";
+        window.location.href = `/users/${username}`;
         // Redirect to the login page or perform any other action
       } else {
         setError("Failed to sign up. Please try again.");

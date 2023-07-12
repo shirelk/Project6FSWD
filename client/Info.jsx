@@ -5,11 +5,13 @@ function Info() {
   const [buttonChangePassword, setButtonChangePassword] = useState(false);
   const [buttonEditInfo, setButtonEditInfo] = useState(false);
   const [buttonDeleteUser, setButtonDeleteUser] = useState(false);
-  let user = JSON.parse(localStorage.getItem("ourUser"));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("ourUser")));
 
   async function saveNewPass() {
     let newPass = document.getElementById("newPass");
-    {/* save new password in database */}
+    {
+      /* save new password in database */
+    }
     await fetch(`http://localhost:3000/users_passwords/${user.id}`, {
       method: "PUT",
       headers: {
@@ -20,6 +22,54 @@ function Info() {
         password: newPass.value,
       }),
     });
+  }
+
+  async function saveNewInfo() {
+    let newUsername = document.getElementById("newUsername");
+    let newEmail = document.getElementById("newEmail");
+    let newName = document.getElementById("newName");
+    let newStreet = document.getElementById("newStreet");
+    let newSuite = document.getElementById("newSuite");
+    let newCity = document.getElementById("newCity");
+    let newZipcode = document.getElementById("newZipcode");
+    let newLat = document.getElementById("newLat");
+    let newLng = document.getElementById("newLng");
+    let newPhone = document.getElementById("newPhone");
+    let newWebsite = document.getElementById("newWebsite");
+    let newCompanyName = document.getElementById("newCompanyName");
+    let newBs = document.getElementById("newBs");
+
+    const updatedUser = {
+      ...user,
+      username: newUsername.value ? newUsername.value : user.username,
+      email: newEmail.value ? newEmail.value : user.email,
+      name: newName.value ? newName.value : user.name,
+      street: newStreet.value ? newStreet.value : user.street,
+      suite: newSuite.value ? newSuite.value : user.suite,
+      city: newCity.value ? newCity.value : user.city,
+      zipcode: newZipcode.value ? newZipcode.value : user.zipcode,
+      lat: newLat.value ? newLat.value : user.lat,
+      lng: newLng.value ? newLng.value : user.lng,
+      phone: newPhone.value ? newPhone.value : user.phone,
+      website: newWebsite.value ? newWebsite.value : user.website,
+      companyName: newCompanyName.value
+        ? newCompanyName.value
+        : user.companyName,
+      catchPhrase: newBs.value ? newBs.value : user.catchPhrase,
+    };
+    console.log(updatedUser);
+    {
+      /* save new info in database */
+    }
+    await fetch(`http://localhost:3000/users/${user.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedUser),
+    });
+    setUser(updatedUser);
+    localStorage.setItem("ourUser", JSON.stringify(updatedUser));
   }
 
   function getInfo() {
@@ -47,7 +97,7 @@ function Info() {
             <br />
             phone: {user.phone}
             <br />
-            website: {user.phone}
+            website: {user.website}
             <br />
             company: <br />
             name: {user.companyName}
@@ -86,63 +136,79 @@ function Info() {
           >
             edit info
           </button>
-          <Popup trigger={buttonEditInfo} setTrigger={setButtonEditInfo}>
+          <Popup
+            trigger={buttonEditInfo}
+            setTrigger={setButtonEditInfo}
+            setSave={saveNewInfo}
+          >
             <div className="popup-div">
               {console.log("edit info popup")}
               <h3>Edit info</h3>
-              {/* לעשות שיופיע בפלייסהולדר את הנתונים שיש עכשיו? */}
               {console.log(user.username)}
               <input
+                id="newUsername"
                 type="text"
                 placeholder={user.username ? user.username : "username"}
               ></input>
               <input
+                id="newEmail"
                 type="email"
                 placeholder={user.email ? user.email : "email"}
               ></input>
               <input
+                id="newName"
                 type="text"
                 placeholder={user.name ? user.name : "name"}
               ></input>
               <input
+                id="newStreet"
                 type="text"
                 placeholder={user.street ? user.street : "street"}
               ></input>
               <input
+                id="newSuite"
                 type="text"
                 placeholder={user.suite ? user.suite : "suite"}
               ></input>
               <input
+                id="newCity"
                 type="text"
                 placeholder={user.city ? user.city : "city"}
               ></input>
               <input
+                id="newZipcode"
                 type="text"
                 placeholder={user.zipcode ? user.zipcode : "zipcode"}
               ></input>
               <input
+                id="newLat"
                 type="text"
                 placeholder={user.lat ? user.lat : "lat"}
               ></input>
               <input
+                id="newLng"
                 type="text"
                 placeholder={user.lng ? user.lng : "lng"}
               ></input>
               <input
+                id="newPhone"
                 type="text"
                 placeholder={user.phone ? user.phone : "phone"}
               ></input>
               <input
+                id="newWebsite"
                 type="text"
                 placeholder={user.website ? user.website : "website"}
               ></input>
               <input
+                id="newCompanyName"
                 type="text"
                 placeholder={
                   user.companyName ? user.companyName : "companyName"
                 }
               ></input>
               <input
+                id="newBs"
                 type="text"
                 placeholder={
                   user.catchPhrase ? user.catchPhrase : "catchPhrase"

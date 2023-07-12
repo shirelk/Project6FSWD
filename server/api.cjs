@@ -81,10 +81,10 @@ app.post("/users", (req, res) => {
 // PUT /users/:id - Update an existing user
 app.put("/users/:id", (req, res) => {
   const userId = req.params.id;
-  const { name, email } = req.body;
+  const { username, email, name, street, suite, city, zipcode, lat, lng, phone, website, companyName, catchPhrase, bs } = req.body;
   db.query(
-    "UPDATE users SET name = ?, email = ? WHERE id = ?",
-    [name, email, userId],
+    "UPDATE users SET username = ?, email = ?, name = ?, street = ?, suite = ?, city = ?, zipcode = ?, lat = ?, lng = ?, phone = ?, website = ?, companyName = ?, catchPhrase = ?, bs = ? WHERE id = ?",
+    [username, email, name, street, suite, city, zipcode, lat, lng, phone, website, companyName, catchPhrase, bs, userId],
     (err, results) => {
       if (err) {
         handleDatabaseError(res, err, "Failed to fetch users");

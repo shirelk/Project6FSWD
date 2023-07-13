@@ -9,9 +9,7 @@ function Info() {
 
   async function saveNewPass() {
     let newPass = document.getElementById("newPass");
-    {
-      /* save new password in database */
-    }
+    // save new password in database
     await fetch(`http://localhost:3000/users_passwords/${user.id}`, {
       method: "PUT",
       headers: {
@@ -58,9 +56,7 @@ function Info() {
       catchPhrase: newBs.value ? newBs.value : user.catchPhrase,
     };
     console.log(updatedUser);
-    {
-      /* save new info in database */
-    }
+    // save new info in database
     await fetch(`http://localhost:3000/users/${user.id}`, {
       method: "PUT",
       headers: {
@@ -70,6 +66,32 @@ function Info() {
     });
     setUser(updatedUser);
     localStorage.setItem("ourUser", JSON.stringify(updatedUser));
+  }
+
+   const deleteUser = async() =>{
+    // check if password matches
+    let password = document.getElementById("password");
+    console.log(password.value);
+    const usertoDeleted = await fetch(
+      `http://localhost:3000/users_passwords/${user.username}`
+    ).then((response) => response.json());
+    if (password.value !== usertoDeleted.password) {
+      alert("wrong password");
+      return;
+    }
+    // delete user from users table
+    await fetch(`http://localhost:3000/users/${user.id}`, {
+      method: "DELETE",
+    });
+
+    // delete user from users_passwords table
+    await fetch(`http://localhost:3000/users_passwords/${user.id}`, {
+      method: "DELETE",
+    });
+
+    // delete user from posts table
+    localStorage.removeItem("ourUser");
+    window.location.href = "/";
   }
 
   function getInfo() {
@@ -222,13 +244,20 @@ function Info() {
           >
             delete user
           </button>
-          <Popup trigger={buttonDeleteUser} setTrigger={setButtonDeleteUser}>
+          <Popup
+            trigger={buttonDeleteUser}
+            setTrigger={setButtonDeleteUser}
+            setSave={deleteUser}
+          >
             <div className="popup-div">
               {console.log("delete user popup")}
               <h3>Are you sure you want to delete the user?</h3>
               <h5>enter your password to confirm:</h5>
-              <input type="password" placeholder="password"></input>
-              {/* להוסיף בדיקה לסיסמה */}
+              <input
+                id="password"
+                type="password"
+                placeholder="password"
+              ></input>
             </div>
           </Popup>
         </div>

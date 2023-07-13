@@ -14,6 +14,7 @@ function handleDatabaseError(res, error, errorMessage) {
 }
 
 //------------------------------------USERS-------------------------------------
+//#region
 app.get("/users", (req, res) => {
   db.query("SELECT * FROM users", (err, results) => {
     if (err) {
@@ -81,10 +82,41 @@ app.post("/users", (req, res) => {
 // PUT /users/:id - Update an existing user
 app.put("/users/:id", (req, res) => {
   const userId = req.params.id;
-  const { username, email, name, street, suite, city, zipcode, lat, lng, phone, website, companyName, catchPhrase, bs } = req.body;
+  const {
+    username,
+    email,
+    name,
+    street,
+    suite,
+    city,
+    zipcode,
+    lat,
+    lng,
+    phone,
+    website,
+    companyName,
+    catchPhrase,
+    bs,
+  } = req.body;
   db.query(
     "UPDATE users SET username = ?, email = ?, name = ?, street = ?, suite = ?, city = ?, zipcode = ?, lat = ?, lng = ?, phone = ?, website = ?, companyName = ?, catchPhrase = ?, bs = ? WHERE id = ?",
-    [username, email, name, street, suite, city, zipcode, lat, lng, phone, website, companyName, catchPhrase, bs, userId],
+    [
+      username,
+      email,
+      name,
+      street,
+      suite,
+      city,
+      zipcode,
+      lat,
+      lng,
+      phone,
+      website,
+      companyName,
+      catchPhrase,
+      bs,
+      userId,
+    ],
     (err, results) => {
       if (err) {
         handleDatabaseError(res, err, "Failed to fetch users");
@@ -114,8 +146,9 @@ app.delete("/users/:id", (req, res) => {
     res.json({ message: "User deleted successfully" });
   });
 });
-
+//#endregion
 //---------------------------------TODOS-------------------------------------
+//#region
 app.get("/todos", (req, res) => {
   const userId = req.query.userId; // Use req.query.userId instead of req.params.userId
   db.query("SELECT * FROM todos WHERE userId = ?", [userId], (err, results) => {
@@ -197,8 +230,9 @@ app.delete("/todos/:id", (req, res) => {
     res.json({ message: "Todo deleted successfully" });
   });
 });
-
+//#endregion
 //------------------------------POSTS-------------------------------------------
+//#region
 app.get("/posts", (req, res) => {
   const userId = req.query.userId; // Use req.query.userId instead of req.params.userId
   console.log("we are in posts");
@@ -282,8 +316,9 @@ app.delete("/posts/:id", (req, res) => {
     res.json({ message: "Post deleted successfully" });
   });
 });
-
+//#endregion
 //----------------------COMMENTS------------------------------------
+//#region
 app.get("/comments", (req, res) => {
   db.query("SELECT * FROM comments", (err, results) => {
     if (err) {
@@ -369,8 +404,9 @@ app.delete("/comments/:id", (req, res) => {
     res.json({ message: "Comment deleted successfully" });
   });
 });
-
+//#endregion
 //-----------------------------ALBUMS-----------------------------------
+//#region
 app.get("/albums", (req, res) => {
   db.query("SELECT * FROM albums", (err, results) => {
     if (err) {
@@ -460,8 +496,9 @@ app.delete("/albums/:id", (req, res) => {
     res.json({ message: "Album deleted successfully" });
   });
 });
-
+//#endregion
 //-----------------------------PHOTOS-----------------------------------
+//#region
 app.get("/photos", (req, res) => {
   db.query("SELECT * FROM photos", (err, results) => {
     if (err) {
@@ -546,9 +583,9 @@ app.delete("/photos/:id", (req, res) => {
     res.json({ message: "Photo deleted successfully" });
   });
 });
-
+//#endregion
 //-----------------------------USERS_PASSWORDS-----------------------------------
-
+//#region
 // Middleware to authenticate user
 const authenticateUser = (req, res, next) => {
   // Check if user is authenticated
@@ -656,6 +693,7 @@ app.delete("/users_passwords/:id", (req, res) => {
     }
   );
 });
+//#endregion
 
 // Start the server
 const port = process.env.PORT || 3000;

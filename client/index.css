@@ -183,3 +183,24 @@ input[type="checkbox"] {
 .password-toggle:focus-visible {
   outline: none; /* Remove the outline for the password-toggle button */
 }
+
+.popup-post {
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+}
+
+.popup-post input {
+  margin: 0.5em;
+}
+
+.popup-post textarea {
+  margin: 0.5em;
+  height: 100px;
+  width: 500px;
+}
+
+.popup-post h4 {
+  margin: 0.2em;
+}

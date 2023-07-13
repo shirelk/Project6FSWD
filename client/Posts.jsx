@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
+import Popup from "./Popup";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Posts() {
   const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [comments, setComments] = useState([]);
+  const [buttonDeleteComment, setButtonDeleteComment] = useState(false);
+  const [buttonNewPost, setButtonNewPost] = useState(false);
+  const user = JSON.parse(localStorage.getItem("ourUser"));
 
   useEffect(() => {
-    let user = JSON.parse(localStorage.getItem("ourUser"));
     fetch(`http://localhost:3000/posts/?userId=${user.id}`)
       .then((response) => response.json())
       .then((data) => {
@@ -14,6 +19,35 @@ function Posts() {
         localStorage.setItem("posts", JSON.stringify(data));
       });
   }, []);
+
+  const deleteComment = async (id) => {
+    await fetch(`http://localhost:3000/comments/${id}`, {
+      method: "DELETE",
+    });
+    const newComments = comments.filter((cmnts) => cmnts.id !== id);
+    setComments(newComments);
+  };
+
+  const saveNewPost = async () => {
+    const newPostTitle = document.getElementById("postTitle").value;
+    const newPostBody = document.getElementById("postBody").value;
+    const newPost = {
+      title: newPostTitle,
+      body: newPostBody,
+      userId: user.id,
+    };
+    await fetch(`http://localhost:3000/posts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newPost),
+    });
+    // Update the local state and todos in the UI
+    setPosts((prevPosts) => [...prevPosts, newPost]);
+    setButtonNewPost(false);
+
+  };
 
   function postPressed(pst) {
     setSelectedPost(pst); //update selected post
@@ -35,6 +69,13 @@ function Posts() {
   }
 
   function showComments(pst) {
+    const handleDeleteComment = (commentId) => {
+      setButtonDeleteComment(true);
+      // Delete comment logic using commentId
+      deleteComment(commentId);
+      setButtonDeleteComment(false);
+    };
+
     if (pst == selectedPost) {
       return (
         <>
@@ -46,6 +87,30 @@ function Posts() {
                   <h3>{cmnts.name}</h3>
                   <h4>{cmnts.email}</h4>
                   <p>{cmnts.body}</p>
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleDeleteComment(cmnts.id)}
+                  >
+                    <FontAwesomeIcon icon={faTrashCan} fade />
+                  </button>
+                  <Popup
+                    trigger={buttonDeleteComment}
+                    setTrigger={setButtonDeleteComment}
+                  >
+                    <h3>Are you sure you want to delete this comment?</h3>
+                    <button
+                      className="popup-close crudBtn mainBtn"
+                      onClick={() => setButtonDeleteComment(false)}
+                    >
+                      cancel
+                    </button>
+                    <button
+                      className="popup-save crudBtn mainBtn"
+                      onClick={() => handleDeleteComment(cmnts.id)}
+                    >
+                      delete
+                    </button>
+                  </Popup>
                 </div>
               </li>
             ))}
@@ -56,9 +121,24 @@ function Posts() {
       return <></>;
     }
   }
+
   return (
     <>
       <h2>your posts:</h2>
+      <button className="new-post-btn" onClick={setButtonNewPost}>
+        new post
+      </button>
+      <Popup
+        trigger={buttonNewPost}
+        setTrigger={setButtonNewPost}
+        setSave={saveNewPost}
+      >
+        <div className="popup-post">
+          <h4>new post:</h4>
+          <input type="text" id="postTitle" placeholder="title" />
+          <textarea id="postBody" placeholder="type here something..." />
+        </div>
+      </Popup>
       <ul>
         {posts.map((pst) => (
           <li key={pst.id}>
@@ -69,6 +149,11 @@ function Posts() {
             >
               <h3>{pst.title}</h3>
               <p>{pst.body}</p>
+
+              <div className="crud-btn">
+                <button className="new-comment-btn">new comment</button>
+                <button className="edit-btn">edit post</button>
+              </div>
             </button>
 
             {showComments(pst)}

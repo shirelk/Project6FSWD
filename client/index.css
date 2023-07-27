@@ -184,23 +184,23 @@ input[type="checkbox"] {
   outline: none; /* Remove the outline for the password-toggle button */
 }
 
-.popup-post {
+.popup-content {
   display: flex;
   flex-direction: column;
   justify-content: top;
   align-items: center;
 }
 
-.popup-post input {
+.popup-content input {
   margin: 0.5em;
 }
 
-.popup-post textarea {
+.popup-content textarea {
   margin: 0.5em;
   height: 100px;
   width: 500px;
 }
 
-.popup-post h4 {
+.popup-content h4 {
   margin: 0.2em;
 }

@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Popup from "./Popup";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrashCan,
+  faCommentDots,
+  faPenToSquare,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Posts() {
@@ -9,6 +13,9 @@ function Posts() {
   const [comments, setComments] = useState([]);
   const [buttonDeleteComment, setButtonDeleteComment] = useState(false);
   const [buttonNewPost, setButtonNewPost] = useState(false);
+  const [buttonNewComment, setButtonNewComment] = useState(false);
+  const [buttonEditPost, setButtonEditPost] = useState(false);
+  const [buttonDeletePost, setButtonDeletePost] = useState(false);
   const user = JSON.parse(localStorage.getItem("ourUser"));
 
   useEffect(() => {
@@ -44,9 +51,31 @@ function Posts() {
       body: JSON.stringify(newPost),
     });
     // Update the local state and todos in the UI
-    setPosts((prevPosts) => [...prevPosts, newPost]);
+    setPosts((prevPosts) => [newPost, ...prevPosts]);
     setButtonNewPost(false);
+  };
 
+  const saveNewComment = async () => {
+    const newCommentName = document.getElementById("commentName").value;
+    const newCommentEmail = document.getElementById("commentEmail").value;
+    const newCommentBody = document.getElementById("commentBody").value;
+    const newComment = {
+      name: newCommentName,
+      email: newCommentEmail,
+      body: newCommentBody,
+      postId: selectedPost.id,
+    };
+    console.log(newComment);
+    await fetch(`http://localhost:3000/comments`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newComment),
+    });
+    // Update the local state and todos in the UI
+    setComments((prevComments) => [...prevComments, newComment]);
+    setButtonNewComment(false);
   };
 
   function postPressed(pst) {
@@ -91,7 +120,7 @@ function Posts() {
                     className="delete-btn"
                     onClick={() => handleDeleteComment(cmnts.id)}
                   >
-                    <FontAwesomeIcon icon={faTrashCan} fade />
+                    <FontAwesomeIcon icon={faTrashCan} />
                   </button>
                   <Popup
                     trigger={buttonDeleteComment}
@@ -106,9 +135,9 @@ function Posts() {
                     </button>
                     <button
                       className="popup-save crudBtn mainBtn"
-                      onClick={() => handleDeleteComment(cmnts.id)}
+                      onClick={() => handleDeleteComment()}
                     >
-                      delete
+                      <FontAwesomeIcon icon={faTrashCan} />
                     </button>
                   </Popup>
                 </div>
@@ -125,7 +154,7 @@ function Posts() {
   return (
     <>
       <h2>your posts:</h2>
-      <button className="new-post-btn" onClick={setButtonNewPost}>
+      <button className="new-post-btn" onClick={() => setButtonNewPost(true)}>
         new post
       </button>
       <Popup
@@ -133,7 +162,7 @@ function Posts() {
         setTrigger={setButtonNewPost}
         setSave={saveNewPost}
       >
-        <div className="popup-post">
+        <div className="popup-content">
           <h4>new post:</h4>
           <input type="text" id="postTitle" placeholder="title" />
           <textarea id="postBody" placeholder="type here something..." />
@@ -142,19 +171,52 @@ function Posts() {
       <ul>
         {posts.map((pst) => (
           <li key={pst.id}>
-            <button
+            <div
               id="clickedBtn"
               onClick={() => postPressed(pst)}
-              className={selectedPost === pst ? "selectedPost" : ""}
+              className={
+                selectedPost === pst ? "selectedPost postDiv" : "postDiv"
+              }
             >
               <h3>{pst.title}</h3>
               <p>{pst.body}</p>
 
               <div className="crud-btn">
-                <button className="new-comment-btn">new comment</button>
-                <button className="edit-btn">edit post</button>
+                <button
+                  className="new-comment-btn"
+                  onClick={() => setButtonNewComment(true)}
+                >
+                  <FontAwesomeIcon icon={faCommentDots} />
+                </button>
+                <Popup
+                  trigger={buttonNewComment}
+                  setTrigger={setButtonNewComment}
+                  setSave={saveNewComment}
+                >
+                  <div className="popup-content">
+                    <h4>new comment:</h4>
+                    <input type="text" id="commentName" placeholder="name" />
+                    <input type="email" id="commentEmail" placeholder="email" />
+                    <textarea
+                      id="commentBody"
+                      placeholder="type here something about this post..."
+                    />
+                  </div>
+                </Popup>
+                <button
+                  className="edit-btn"
+                  onClick={() => setButtonEditPost(true)}
+                >
+                  <FontAwesomeIcon icon={faPenToSquare} />
+                </button>
+                <button className="delete-btn">
+                  <FontAwesomeIcon
+                    icon={faTrashCan}
+                    onClick={() => setButtonDeletePost(true)}
+                  />
+                </button>
               </div>
-            </button>
+            </div>
 
             {showComments(pst)}
           </li>

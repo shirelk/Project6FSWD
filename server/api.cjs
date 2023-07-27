@@ -351,13 +351,13 @@ app.get("/comments/:id", (req, res) => {
 
 // POST /comments - Create a new comment
 app.post("/comments", (req, res) => {
-  const { postId, name, email, body } = req.body;
+  const {  name, email, body,postId } = req.body;
   db.query(
-    "INSERT INTO comments (postId, name, email, body) VALUES (?, ?, ?, ?)",
-    [postId, name, email, body],
+    "INSERT INTO comments ( name, email, body, postId) VALUES (?, ?, ?, ?)",
+    [ name, email, body, postId],
     (err, results) => {
       if (err) {
-        handleDatabaseError(res, err, "Failed to fetch users");
+        handleDatabaseError(res, err, "Failed to fetch comments");
         return;
       }
       res.json({

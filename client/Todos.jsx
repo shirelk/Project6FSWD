@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Popup from "./Popup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 function Todos() {
   const [todos, setTodos] = useState([]);
@@ -88,7 +88,6 @@ function Todos() {
     // console.log("Updated todo in the database");
   }
 
-  // New function to handle editing a todo item
   function handleEdit(todo) {
     setEditedTodo(todo);
     setButtonEditTodo(true);
@@ -120,6 +119,17 @@ function Todos() {
     }
   }
 
+  function handleDelete(todo) {
+    // Remove the todo from the database
+    fetch(`http://localhost:3000/todos/${todo.id}`, {
+      method: "DELETE",
+    });
+
+    // Update the local state and todos in the UI
+    setTodos((prevTodos) => prevTodos.filter((item) => item.id !== todo.id));
+    setButtonDeleteTodo(false);
+  }
+
   function setCheck(td) {
     return (
       <div>
@@ -136,6 +146,13 @@ function Todos() {
           onClick={() => handleEdit(td)}
         >
           <FontAwesomeIcon icon={faPen} onClick={() => handleEdit(td)} />
+        </button>
+        <button
+          type="button"
+          className="delete-toggle"
+          onClick={() => handleDelete(td)}
+        >
+          <FontAwesomeIcon icon={faTrashAlt} />
         </button>
       </div>
     );

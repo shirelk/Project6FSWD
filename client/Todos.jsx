@@ -225,25 +225,6 @@ function Todos() {
             <input id="newTodo" type="text" placeholder="Todo..."></input>
           </div>
         </Popup>
-        <button
-          className="crudBtn mainBtn"
-          onClick={() => setButtonDeleteTodo(true)}
-        >
-          Delete todo
-        </button>
-        <Popup
-          trigger={buttonDeleteTodo}
-          setTrigger={setButtonDeleteTodo}
-          // setSave={???}
-        >
-          <div className="popup-div">
-            {/* {console.log("delete todo popup")} */}
-            <h3>
-              Press 'save' to delete this item from the todo list, otherwise
-              press 'cencel'
-            </h3>
-          </div>
-        </Popup>
       </div>
     </>
   );

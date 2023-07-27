@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Popup from "./Popup";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 
 function Todos() {
   const [todos, setTodos] = useState([]);
@@ -128,8 +130,13 @@ function Todos() {
           onChange={(event) => handleCheckChange(event, td)}
         ></input>
         <label htmlFor={td.id}> {td.title}</label>
-        {/* Add an edit button */}
-        <button onClick={() => handleEdit(td)}>Edit</button>
+        <button
+          type="button"
+          className="edit-toggle"
+          onClick={() => handleEdit(td)}
+        >
+          <FontAwesomeIcon icon={faPen} onClick={() => handleEdit(td)} />
+        </button>
       </div>
     );
   }
@@ -161,7 +168,11 @@ function Todos() {
         </ul>
       </div>
       <div className="crudDiv">
-        <Popup trigger={buttonEditTodo} setTrigger={setButtonEditTodo}>
+        <Popup
+          trigger={buttonEditTodo}
+          setTrigger={setButtonEditTodo}
+          setSave={saveEditedTodo}
+        >
           <div className="popup-div">
             <h3>Edit Todo</h3>
             <h5>Enter new todo:</h5>
@@ -176,8 +187,7 @@ function Todos() {
                 })
               }
             />
-            <button onClick={saveEditedTodo}>Save</button>
-            <button onClick={() => setEditedTodo(null)}>Cancel</button>
+            {/* <button onClick={saveEditedTodo}>Save</button> */}
           </div>
         </Popup>
         <button

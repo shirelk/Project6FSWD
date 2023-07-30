@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Popup from "./Popup";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 function Todos() {
   const [todos, setTodos] = useState([]);
   const [sortOption, setSortOption] = useState("");
-
   const [buttonAddTodo, setButtonAddTodo] = useState(false);
   const [buttonEditTodo, setButtonEditTodo] = useState(false);
   const [buttonDeleteTodo, setButtonDeleteTodo] = useState(false);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("ourUser")));
+  const [editedTodo, setEditedTodo] = useState(null);
 
   async function saveNewTodo() {
     const newTodoValue = document.getElementById("newTodo").value;
@@ -83,7 +85,49 @@ function Todos() {
         userId: td.userId,
       }),
     });
-    console.log("Updated todo in the database");
+    // console.log("Updated todo in the database");
+  }
+
+  function handleEdit(todo) {
+    setEditedTodo(todo);
+    setButtonEditTodo(true);
+  }
+
+  async function saveEditedTodo() {
+    // Implement the logic to save the edited todo to the database
+    if (editedTodo) {
+      // Update the todos in the database
+      await fetch(`http://localhost:3000/todos/${editedTodo.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: editedTodo.title,
+          completed: editedTodo.completed,
+          userId: editedTodo.userId,
+        }),
+      });
+
+      // Update the local state and todos in the UI
+      setTodos((prevTodos) =>
+        prevTodos.map((todo) => (todo.id === editedTodo.id ? editedTodo : todo))
+      );
+
+      setEditedTodo(null);
+      setButtonEditTodo(false);
+    }
+  }
+
+  function handleDelete(todo) {
+    // Remove the todo from the database
+    fetch(`http://localhost:3000/todos/${todo.id}`, {
+      method: "DELETE",
+    });
+
+    // Update the local state and todos in the UI
+    setTodos((prevTodos) => prevTodos.filter((item) => item.id !== todo.id));
+    setButtonDeleteTodo(false);
   }
 
   function setCheck(td) {
@@ -96,6 +140,20 @@ function Todos() {
           onChange={(event) => handleCheckChange(event, td)}
         ></input>
         <label htmlFor={td.id}> {td.title}</label>
+        <button
+          type="button"
+          className="edit-toggle"
+          onClick={() => handleEdit(td)}
+        >
+          <FontAwesomeIcon icon={faPen} onClick={() => handleEdit(td)} />
+        </button>
+        <button
+          type="button"
+          className="delete-toggle"
+          onClick={() => handleDelete(td)}
+        >
+          <FontAwesomeIcon icon={faTrashAlt} />
+        </button>
       </div>
     );
   }
@@ -127,6 +185,28 @@ function Todos() {
         </ul>
       </div>
       <div className="crudDiv">
+        <Popup
+          trigger={buttonEditTodo}
+          setTrigger={setButtonEditTodo}
+          setSave={saveEditedTodo}
+        >
+          <div className="popup-div">
+            <h3>Edit Todo</h3>
+            <h5>Enter new todo:</h5>
+            <input
+              type="text"
+              placeholder="Todo..."
+              value={editedTodo ? editedTodo.title : ""}
+              onChange={(e) =>
+                setEditedTodo({
+                  ...editedTodo,
+                  title: e.target.value,
+                })
+              }
+            />
+            {/* <button onClick={saveEditedTodo}>Save</button> */}
+          </div>
+        </Popup>
         <button
           className="crudBtn mainBtn"
           onClick={() => setButtonAddTodo(true)}
@@ -139,46 +219,10 @@ function Todos() {
           setSave={saveNewTodo}
         >
           <div className="popup-div">
-            {console.log("add todo popup")}
+            {/* {console.log("add todo popup")} */}
             <h3>Add a new todo to your list</h3>
             <h5>enter new todo:</h5>
             <input id="newTodo" type="text" placeholder="Todo..."></input>
-          </div>
-        </Popup>
-        <button
-          className="crudBtn mainBtn"
-          onClick={() => setButtonEditTodo(true)}
-        >
-          Edit todo
-        </button>
-        <Popup
-          trigger={buttonEditTodo}
-          setTrigger={setButtonEditTodo}
-          // setSave={saveNewTodo}
-        >
-          <div className="popup-div">
-            {console.log("edit todo popup")}
-            <h3>Edit Todo</h3>
-            {/* -----------TODO------------- */}
-          </div>
-        </Popup>
-        <button
-          className="crudBtn mainBtn"
-          onClick={() => setButtonDeleteTodo(true)}
-        >
-          Delete todo
-        </button>
-        <Popup
-          trigger={buttonDeleteTodo}
-          setTrigger={setButtonDeleteTodo}
-          // setSave={???}
-        >
-          <div className="popup-div">
-            {console.log("delete todo popup")}
-            <h3>
-              Press 'save' to delete this item from the todo list, otherwise
-              press 'cencel'
-            </h3>
           </div>
         </Popup>
       </div>

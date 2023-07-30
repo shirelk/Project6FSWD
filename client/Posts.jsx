@@ -7,6 +7,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+let i = 0;
+
 function Posts() {
   const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
@@ -18,6 +20,23 @@ function Posts() {
   const [buttonDeletePost, setButtonDeletePost] = useState(false);
   const user = JSON.parse(localStorage.getItem("ourUser"));
 
+  const [newPostTitle, setNewPostTitle] = useState("");
+  const [newPostBody, setNewPostBody] = useState("");
+
+  const [newCommentName, setNewCommentName] = useState("");
+  const [newCommentEmail, setNewCommentEmail] = useState("");
+  const [newCommentBody, setNewCommentBody] = useState("");
+
+  const [editPostTitle, setEditPostTitle] = useState("");
+  const [editPostBody, setEditPostBody] = useState("");
+
+  //added
+  const [newCommentPopups, setNewCommentPopups] = useState(null);
+
+  // useEffect(() => {
+  //   setNewCommentPopups(null);
+  // }, [])
+
   useEffect(() => {
     fetch(`http://localhost:3000/posts/?userId=${user.id}`)
       .then((response) => response.json())
@@ -26,6 +45,17 @@ function Posts() {
         localStorage.setItem("posts", JSON.stringify(data));
       });
   }, []);
+
+  const deletePost = async () => {
+    await fetch(`http://localhost:3000/posts/${selectedPost.id}`, {
+      method: "DELETE",
+    });
+    // Update the local state in the UI
+    setPosts((prevPosts) =>
+      prevPosts.filter((post) => post.id !== selectedPost.id)
+    );
+    setButtonDeletePost(false);
+  };
 
   const deleteComment = async (id) => {
     await fetch(`http://localhost:3000/comments/${id}`, {
@@ -36,8 +66,6 @@ function Posts() {
   };
 
   const saveNewPost = async () => {
-    const newPostTitle = document.getElementById("postTitle").value;
-    const newPostBody = document.getElementById("postBody").value;
     const newPost = {
       title: newPostTitle,
       body: newPostBody,
@@ -53,12 +81,11 @@ function Posts() {
     // Update the local state and todos in the UI
     setPosts((prevPosts) => [newPost, ...prevPosts]);
     setButtonNewPost(false);
+    setNewPostTitle("");
+    setNewPostBody("");
   };
 
   const saveNewComment = async () => {
-    const newCommentName = document.getElementById("commentName").value;
-    const newCommentEmail = document.getElementById("commentEmail").value;
-    const newCommentBody = document.getElementById("commentBody").value;
     const newComment = {
       name: newCommentName,
       email: newCommentEmail,
@@ -76,9 +103,45 @@ function Posts() {
     // Update the local state and todos in the UI
     setComments((prevComments) => [...prevComments, newComment]);
     setButtonNewComment(false);
+    setNewCommentName("");
+    setNewCommentEmail("");
+    setNewCommentBody("");
+  };
+
+  const saveUpdatedPost = async () => {
+    const updatedPost = {
+      title: editPostTitle, // Use editPostTitle instead of newPostTitle
+      body: editPostBody, // Use editPostBody instead of newPostBody
+      userId: user.id,
+    };
+    await fetch(`http://localhost:3000/posts/${selectedPost.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedPost),
+    });
+    // Update the local state and todos in the UI
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === selectedPost.id ? { ...post, ...updatedPost } : post
+      )
+    );
+    setButtonEditPost(false);
+    setEditPostTitle("");
+    setEditPostBody("");
   };
 
   function postPressed(pst) {
+    if (selectedPost === pst.id) {
+      return;
+    }
+    console.log(pst);
+    //added
+    setNewCommentPopups(null); // Close any open popup
+    // console.log('Setting openedPopup to', pst.id);
+    // setNewCommentPopups(pst.id); // Set for clicked post
+
     setSelectedPost(pst); //update selected post
     //show all comments related to the clicked post
     fetch(`http://localhost:3000/comments/?pstId=${pst.id}`)
@@ -95,6 +158,9 @@ function Posts() {
           });
         }
       });
+    // Set the temporary edited data to the current post data when the edit button is clicked
+    setEditPostTitle(pst.title);
+    setEditPostBody(pst.body);
   }
 
   function showComments(pst) {
@@ -151,6 +217,8 @@ function Posts() {
     }
   }
 
+  console.log(i++);
+
   return (
     <>
       <h2>your posts:</h2>
@@ -164,8 +232,19 @@ function Posts() {
       >
         <div className="popup-content">
           <h4>new post:</h4>
-          <input type="text" id="postTitle" placeholder="title" />
-          <textarea id="postBody" placeholder="type here something..." />
+          <input
+            type="text"
+            id="postTitle"
+            placeholder="title"
+            value={newPostTitle}
+            onChange={(e) => setNewPostTitle(e.target.value)}
+          />
+          <textarea
+            id="postBody"
+            placeholder="type here something about this post..."
+            value={newPostBody}
+            onChange={(e) => setNewPostBody(e.target.value)}
+          />
         </div>
       </Popup>
       <ul>
@@ -175,7 +254,7 @@ function Posts() {
               id="clickedBtn"
               onClick={() => postPressed(pst)}
               className={
-                selectedPost === pst ? "selectedPost postDiv" : "postDiv"
+                selectedPost === pst.id ? "selectedPost postDiv" : "postDiv"
               }
             >
               <h3>{pst.title}</h3>
@@ -184,22 +263,51 @@ function Posts() {
               <div className="crud-btn">
                 <button
                   className="new-comment-btn"
-                  onClick={() => setButtonNewComment(true)}
+                  onClick={
+                    //   () => {
+                    //   setButtonNewComment(true);
+                    // }
+                    //added
+                    (e) => {
+                      setNewCommentPopups(pst.id);
+                      //stop propagation to the parent div
+                      //so that the postPressed function won't be called
+                      //and the comments won't be shown
+                      e.stopPropagation();
+                    }
+                  }
                 >
                   <FontAwesomeIcon icon={faCommentDots} />
                 </button>
                 <Popup
-                  trigger={buttonNewComment}
-                  setTrigger={setButtonNewComment}
-                  setSave={saveNewComment}
+                  // trigger={buttonNewComment}
+                  // setTrigger={setButtonNewComment}
+                  //added
+                  trigger={newCommentPopups === pst.id}
+                  setTrigger={() => setNewCommentPopups(null)}
+                  setSave={() => saveNewComment()}
                 >
                   <div className="popup-content">
                     <h4>new comment:</h4>
-                    <input type="text" id="commentName" placeholder="name" />
-                    <input type="email" id="commentEmail" placeholder="email" />
+                    <input
+                      type="text"
+                      id="commentName"
+                      placeholder="name"
+                      value={newCommentName}
+                      onChange={(e) => setNewCommentName(e.target.value)}
+                    />
+                    <input
+                      type="email"
+                      id="commentEmail"
+                      placeholder="email"
+                      value={newCommentEmail}
+                      onChange={(e) => setNewCommentEmail(e.target.value)}
+                    />
                     <textarea
                       id="commentBody"
                       placeholder="type here something about this post..."
+                      value={newCommentBody}
+                      onChange={(e) => setNewCommentBody(e.target.value)}
                     />
                   </div>
                 </Popup>
@@ -209,12 +317,50 @@ function Posts() {
                 >
                   <FontAwesomeIcon icon={faPenToSquare} />
                 </button>
+                <Popup //edit post popup
+                  trigger={buttonEditPost}
+                  setTrigger={setButtonEditPost}
+                  setSave={saveUpdatedPost}
+                >
+                  <div className="popup-content">
+                    <h4>edit post:</h4>
+                    <input
+                      type="text"
+                      id="postTitle"
+                      value={editPostTitle} // Use editPostTitle instead of pst.title or newPostTitle
+                      onChange={(e) => setEditPostTitle(e.target.value)}
+                    />
+                    <textarea
+                      id="postBody"
+                      value={editPostBody} // Use editPostBody instead of pst.body or newPostBody
+                      onChange={(e) => setEditPostBody(e.target.value)}
+                    />
+                  </div>
+                </Popup>
                 <button className="delete-btn">
                   <FontAwesomeIcon
                     icon={faTrashCan}
                     onClick={() => setButtonDeletePost(true)}
                   />
                 </button>
+                <Popup
+                  trigger={buttonDeletePost}
+                  setTrigger={setButtonDeletePost}
+                >
+                  <h3>Are you sure you want to delete this post?</h3>
+                  <button
+                    className="popup-close crudBtn mainBtn"
+                    onClick={() => setButtonDeletePost(false)}
+                  >
+                    cancel
+                  </button>
+                  <button
+                    className="popup-save crudBtn mainBtn"
+                    onClick={deletePost}
+                  >
+                    <FontAwesomeIcon icon={faTrashCan} />
+                  </button>
+                </Popup>
               </div>
             </div>
 

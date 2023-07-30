@@ -304,9 +304,27 @@ app.put("/posts/:id", (req, res) => {
 // DELETE /posts/:id - Delete a post
 app.delete("/posts/:id", (req, res) => {
   const postId = req.params.id;
+  // DELETE all comments associated with the post
+  db.query(
+    "DELETE FROM comments WHERE postId = ?",
+    [postId],
+    (err, results) => {
+      if (err) {
+        console.error("Error executing the query: ", err);
+        return res
+          .status(500)
+          .json({ error: "Failed to delete comments of post" });
+      }
+      if (results.affectedRows === 0) {
+        return res.status(404).json({ error: "Post not found" });
+      }
+    }
+  );
+
+  console.log("we are in posts:id");
   db.query("DELETE FROM posts WHERE id = ?", [postId], (err, results) => {
     if (err) {
-      handleDatabaseError(res, err, "Failed to fetch users");
+      handleDatabaseError(res, err, "Failed to fetch posts");
       return;
     }
     if (results.affectedRows === 0) {
@@ -351,10 +369,10 @@ app.get("/comments/:id", (req, res) => {
 
 // POST /comments - Create a new comment
 app.post("/comments", (req, res) => {
-  const {  name, email, body,postId } = req.body;
+  const { name, email, body, postId } = req.body;
   db.query(
     "INSERT INTO comments ( name, email, body, postId) VALUES (?, ?, ?, ?)",
-    [ name, email, body, postId],
+    [name, email, body, postId],
     (err, results) => {
       if (err) {
         handleDatabaseError(res, err, "Failed to fetch comments");

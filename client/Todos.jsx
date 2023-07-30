@@ -11,24 +11,25 @@ function Todos() {
   const [buttonDeleteTodo, setButtonDeleteTodo] = useState(false);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("ourUser")));
   const [editedTodo, setEditedTodo] = useState(null);
+  const [newTodo, setNewTodo] = useState("");
 
   async function saveNewTodo() {
-    const newTodoValue = document.getElementById("newTodo").value;
-    const newTodo = {
-      title: newTodoValue,
+    const newTodoData = {
+      // Rename the variable to newTodoData
+      title: newTodo,
       completed: false,
       userId: user.id,
     };
-    await fetch(`http://localhost:3000/todos/${user.id}`, {
+    await fetch(`http://localhost:3000/todos`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newTodo),
+      body: JSON.stringify(newTodoData), // Use newTodoData instead of newTodo
     });
     // Update the local state and todos in the UI
-    setTodos((prevTodos) => [...prevTodos, newTodo]);
-    document.getElementById("newTodo").value = "";
+    setTodos((prevTodos) => [...prevTodos, newTodoData]);
+    setNewTodo(""); // Clear the newTodo state
     setButtonAddTodo(false);
   }
 
@@ -133,13 +134,6 @@ function Todos() {
   function setCheck(td) {
     return (
       <div>
-        <input
-          type="checkbox"
-          id={td.id} // Update name to id
-          checked={td.completed}
-          onChange={(event) => handleCheckChange(event, td)}
-        ></input>
-        <label htmlFor={td.id}> {td.title}</label>
         <button
           type="button"
           className="edit-toggle"
@@ -154,6 +148,13 @@ function Todos() {
         >
           <FontAwesomeIcon icon={faTrashAlt} />
         </button>
+        <input
+          type="checkbox"
+          id={td.id} // Update name to id
+          checked={td.completed}
+          onChange={(event) => handleCheckChange(event, td)}
+        ></input>
+        <label htmlFor={td.id}> {td.title}</label>
       </div>
     );
   }
@@ -222,7 +223,13 @@ function Todos() {
             {/* {console.log("add todo popup")} */}
             <h3>Add a new todo to your list</h3>
             <h5>enter new todo:</h5>
-            <input id="newTodo" type="text" placeholder="Todo..."></input>
+            <input
+              id="newTodo"
+              type="text"
+              placeholder="Todo..."
+              value={newTodo}
+              onChange={(e) => setNewTodo(e.target.value)}
+            />
           </div>
         </Popup>
       </div>
